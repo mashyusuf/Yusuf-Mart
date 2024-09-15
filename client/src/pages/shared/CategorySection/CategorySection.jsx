@@ -29,7 +29,7 @@ export default function CategorySection() {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row">
+    <div className="flex flex-col lg:flex-row container mx-auto">
       {/* Sidebar with Categories */}
       <div
         className={`w-full lg:w-1/4 bg-gray-100 p-4 ${isMobileView ? 'block' : 'hidden lg:block'}`}
