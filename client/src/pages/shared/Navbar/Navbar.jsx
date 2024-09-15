@@ -1,58 +1,76 @@
-import React from 'react'
-
+import React, { useState } from 'react';
+import { FaHeart, FaUserAlt, FaShoppingCart, FaSearch, FaMapMarkerAlt, FaBars } from 'react-icons/fa';
+import logo from '../../../assets/logo.png'; // Use a fake logo image or replace with your own logo
+import { IoSearchOutline } from "react-icons/io5";
+import { FiHeart } from "react-icons/fi";
+import { FaUserSecret } from "react-icons/fa6";
 export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <div className="navbar bg-base-100">
-  <div className="navbar-start">
-    <div className="dropdown">
-      <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4 6h16M4 12h8m-8 6h16" />
-        </svg>
+    <div className="bg-white shadow-md">
+      {/* Main Section: Logo, Delivery, Search Bar, and Icons */}
+      <div className="flex justify-between items-center px-4 py-4">
+        {/* Logo and Delivery on Left */}
+        <div className="flex items-center lg:w-1/4 md:w-1/4 w-1/2">
+          <img src={logo} alt="Logo" className="w-16 h-16" />
+          <div className="hidden md:flex items-center ml-4">
+            <FaMapMarkerAlt className="text-gray-700 mr-2" />
+            <span className="text-sm">Deliver to all</span>
+          </div>
+        </div>
+
+        {/* Search Bar in Center */}
+        <div className="hidden md:flex items-center lg:w-2/4 md:w-2/4 w-full">
+          <input
+            type="text"
+            className="border rounded-md w-full p-2"
+            placeholder="Search for products, categories, or brands..."
+          />
+          <IoSearchOutline className="ml-2 text-black text-xl cursor-pointer" />
+        </div>
+
+        {/* Icons on Right */}
+        <div className="flex items-center lg:w-1/4 md:w-1/4 w-1/2 justify-end space-x-4">
+          <div className="flex items-center space-x-2">
+            <FaUserSecret className="text-xl text-gray-700 cursor-pointer" />
+            <span className="text-sm cursor-pointer">Sign In<br />Account</span>
+          </div>
+          <FiHeart className="text-xl text-gray-700 cursor-pointer" />
+          <FaShoppingCart className="text-xl text-gray-700 cursor-pointer" />
+          {/* Menu icon for small devices */}
+          <FaBars className="text-2xl lg:hidden cursor-pointer" onClick={toggleMenu} />
+        </div>
       </div>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-        <li><a>Item 1</a></li>
-        <li>
-          <a>Parent</a>
-          <ul className="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
+
+      {/* Responsive Search Bar for Small Devices */}
+      <div className="flex md:hidden items-center px-4 pb-2">
+        <input
+          type="text"
+          className="border rounded-md w-full p-2"
+          placeholder="Search for products, categories, or brands..."
+        />
+        <IoSearchOutline className="ml-2 text-gray-500 text-xl cursor-pointer" />
+      </div>
+
+      {/* Responsive Menu Section for Small Devices */}
+      {isMenuOpen && (
+        <div className="bg-white lg:hidden">
+          <ul className="p-4 space-y-2">
+            <li><a href="/">Home</a></li>
+            <li><a href="/shop">Shop</a></li>
+            <li><a href="/fruits-vegetables">Fruits & Vegetables</a></li>
+            <li><a href="/beverages">Beverages</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/trending">Trending Products</a></li>
           </ul>
-        </li>
-        <li><a>Item 3</a></li>
-      </ul>
+        </div>
+      )}
     </div>
-    <a className="btn btn-ghost text-xl">daisyUI</a>
-  </div>
-  <div className="navbar-center hidden lg:flex">
-    <ul className="menu menu-horizontal px-1">
-      <li><a>Item 1</a></li>
-      <li>
-        <details>
-          <summary>Parent</summary>
-          <ul className="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </details>
-      </li>
-      <li><a>Item 3</a></li>
-    </ul>
-  </div>
-  <div className="navbar-end">
-    <a className="btn">Button</a>
-  </div>
-</div>
-  )
+  );
 }
