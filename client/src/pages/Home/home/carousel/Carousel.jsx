@@ -19,58 +19,89 @@ export default function Carousel() {
       >
         <div className="relative">
           <img src={image1} alt="Carousel Item 1" className="w-full h-96 object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-transparent p-8 flex items-center">
-            <div className="text-white max-w-md">
-              <h2 className="text-3xl font-bold mb-4">Fruits & Vegetables</h2>
-              <p className="mb-4">
-                Don’t miss these opportunities... We have prepared special discounts for you on grocery. Get the best quality products at the lowest prices.
-              </p>
-              <button className="bg-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-purple-700 transition">
+          <div className="absolute top-0 left-0 w-1/2 p-10 bg-gradient-to-r from-purple-500 to-transparent">
+            <span className="text-green-600 font-semibold">Weekend Discount</span>
+            <h2 className="text-4xl font-bold text-white mt-4 mb-4">
+              Get the best quality products at the lowest prices
+            </h2>
+            <p className="text-white mb-4">
+              We have prepared special discounts for you on grocery products. Don’t miss these opportunities...
+            </p>
+            <div className="flex items-center space-x-4">
+              <button className="bg-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-purple-700 transition">
                 Shop Now
               </button>
+              <div className="text-3xl font-bold text-red-700">
+                $27.99 <span className="text-gray-700 line-through text-xl ml-2">$56.67</span>
+              </div>
             </div>
+            <p className="text-gray-700 text-sm mt-2">Don't miss this limited-time offer.</p>
           </div>
         </div>
+
         <div className="relative">
           <img src={image2} alt="Carousel Item 2" className="w-full h-96 object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-transparent p-8 flex items-center">
-            <div className="text-white max-w-md">
-              <h2 className="text-3xl font-bold mb-4">Beverages</h2>
-              <p className="mb-4">
-                Don’t miss these opportunities... We have prepared special discounts for you on grocery. Get the best quality products at the lowest prices.
-              </p>
-              <button className="bg-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-purple-700 transition">
+          <div className="absolute top-0 left-0 w-1/2 p-10  bg-gradient-to-r from-purple-500 to-transparent">
+            <span className="text-green-600 font-semibold">Weekend Discount</span>
+            <h2 className="text-4xl font-bold text-white mt-4 mb-4">
+              Get the best quality products at the lowest prices
+            </h2>
+            <p className="text-white mb-4">
+              We have prepared special discounts for you on grocery products. Don’t miss these opportunities...
+            </p>
+            <div className="flex items-center space-x-4">
+              <button className="bg-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-purple-700 transition">
                 Shop Now
               </button>
+              <div className="text-3xl font-bold text-red-700">
+                $27.99 <span className="text-gray-700 line-through text-xl ml-2">$56.67</span>
+              </div>
             </div>
+            <p className="text-gray-700 text-sm mt-2">Don't miss this limited-time offer.</p>
           </div>
         </div>
+
         <div className="relative">
           <img src={image3} alt="Carousel Item 3" className="w-full h-96 object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-transparent p-8 flex items-center">
-            <div className="text-white max-w-md">
-              <h2 className="text-3xl font-bold mb-4">Bakery & Dairy</h2>
-              <p className="mb-4">
-                Don’t miss these opportunities... We have prepared special discounts for you on grocery. Get the best quality products at the lowest prices.
-              </p>
-              <button className="bg-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-purple-700 transition">
+          <div className="absolute top-0 left-0 w-1/2 p-10  bg-gradient-to-r from-purple-500 to-transparent">
+            <span className="text-green-600 font-semibold">Weekend Discount</span>
+            <h2 className="text-4xl font-bold text-white mt-4 mb-4">
+              Get the best quality products at the lowest prices
+            </h2>
+            <p className="text-white mb-4">
+              We have prepared special discounts for you on grocery products. Don’t miss these opportunities...
+            </p>
+            <div className="flex items-center space-x-4">
+              <button className="bg-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-purple-700 transition">
                 Shop Now
               </button>
+              <div className="text-3xl font-bold text-red-700">
+                $27.99 <span className="text-gray-700 line-through text-xl ml-2">$56.67</span>
+              </div>
             </div>
+            <p className="text-gray-700 text-sm mt-2">Don't miss this limited-time offer.</p>
           </div>
         </div>
+
         <div className="relative">
           <img src={image4} alt="Carousel Item 4" className="w-full h-96 object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-transparent p-8 flex items-center">
-            <div className="text-white max-w-md">
-              <h2 className="text-3xl font-bold mb-4">Healthcare</h2>
-              <p className="mb-4">
-                Don’t miss these opportunities... We have prepared special discounts for you on grocery. Get the best quality products at the lowest prices.
-              </p>
-              <button className="bg-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-purple-700 transition">
+          <div className="absolute top-0 left-0 w-1/2 p-8  bg-opacity-80">
+            <span className="text-green-600 font-semibold">Weekend Discount</span>
+            <h2 className="text-4xl font-bold text-purple-700 mt-4 mb-4">
+              Get the best quality products at the lowest prices
+            </h2>
+            <p className="text-gray-700 mb-4">
+              We have prepared special discounts for you on grocery products. Don’t miss these opportunities...
+            </p>
+            <div className="flex items-center space-x-4">
+              <button className="bg-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-purple-700 transition">
                 Shop Now
               </button>
+              <div className="text-3xl font-bold text-red-500">
+                $27.99 <span className="text-gray-500 line-through text-xl ml-2">$56.67</span>
+              </div>
             </div>
+            <p className="text-gray-500 text-sm mt-2">Don't miss this limited-time offer.</p>
           </div>
         </div>
       </ReactCarousel>

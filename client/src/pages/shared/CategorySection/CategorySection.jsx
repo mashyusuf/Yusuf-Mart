@@ -32,7 +32,7 @@ export default function CategorySection() {
     <div className="flex flex-col lg:flex-row container mx-auto">
       {/* Sidebar with Categories */}
       <div
-        className={`w-full lg:w-1/4 bg-gray-100 p-4 ${isMobileView ? 'block' : 'hidden lg:block'}`}
+        className={`w-full lg:w-1/4 bg-gray-100 py-4  ${isMobileView ? 'block' : 'hidden lg:block'}`}
       >
         {isMobileView ? (
           <>
@@ -108,7 +108,7 @@ export default function CategorySection() {
               </button>
             </div>
             {/* Sidebar categories for medium and large devices */}
-            <ul className={`mt-4 space-y-2 ${isCategoriesVisible ? 'block' : 'hidden'}`}>
+            <ul className={`mt-4  space-y-2 ${isCategoriesVisible ? 'block' : 'hidden'}`}>
               <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center space-x-2 text-purple-600">
                 <FaCarrot className="text-orange-500" />
                 <span>Fruits & Vegetables</span>
@@ -133,7 +133,7 @@ export default function CategorySection() {
                 <FaHome className="text-green-500" />
                 <span>Household Needs</span>
               </li>
-              <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center space-x-2 text-purple-600">
+              <li className="hover:bg-gray-200 p-2  rounded-md cursor-pointer flex items-center space-x-2 text-purple-600">
                 <FaBaby className="text-pink-500" />
                 <span>Baby & Pregnancy</span>
               </li>
@@ -143,7 +143,17 @@ export default function CategorySection() {
       </div>
 
       {/* Carousel Section */}
+      
       <div className="w-full lg:w-3/4 p-4">
+      <div className="hidden lg:flex justify-between pb-4">
+          <a href="/" className="text-gray-700 hover:text-blue-600">Home</a>
+          <a href="/shop" className="text-gray-700 hover:text-blue-600">Shop</a>
+          <a href="/fruits-vegetables" className="text-gray-700 hover:text-blue-600">Fruits & Vegetables</a>
+          <a href="/beverages" className="text-gray-700 hover:text-blue-600">Beverages</a>
+          <a href="/blog" className="text-gray-700 hover:text-blue-600">Blog</a>
+          <a href="/contact" className="text-gray-700 hover:text-blue-600">Contact</a>
+          <a href="/trending" className="text-gray-700 hover:text-blue-600">Trending Products</a>
+        </div>
         <Carousel />
       </div>
     </div>
