@@ -64,7 +64,7 @@ export default function ThisWeekProducts() {
     return (
         <div className="container mx-auto px-4">
             <div>
-                <h1 className="text-xl font-bold mb-6 text-purple-600">
+                <h1 className="text-xl  font-bold mb-6 text-purple-600">
                     This Week's Special Products
                 </h1>
             </div>
@@ -93,7 +93,7 @@ export default function ThisWeekProducts() {
                         <div className="absolute inset-0 bg-black opacity-30" />
 
                         {/* Special: This Week Badge */}
-                        <div className="absolute top-4 right-4 bg-slate-500 text-white font-bold py-1 px-3 rounded-full shadow-lg text-sm sm:text-xs">
+                        <div className="absolute top-0 right-0  text-orange-600 font-bold py-1 px-3 rounded-full shadow-lg text-sm sm:text-xs">
                             {product.special}
                         </div>
 

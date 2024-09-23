@@ -26,6 +26,8 @@ async function run() {
   try {
     const allCategoryCollection = client.db('Yusuf-Mart').collection('allData');
     const thisWeakProductsCollection = client.db('Yusuf-Mart').collection('thisWeak');
+    const newArrivalsCollection = client.db('Yusuf-Mart').collection('new Arrivals');
+    const discountProductsCollection = client.db('Yusuf-Mart').collection('FeatureProducts');
 
 
         //fetch the All  Data From database
@@ -36,6 +38,16 @@ async function run() {
         //fetch the this weak  Data From database
         app.get('/thisWeakProducts',async (req,res)=>{
         const  result = await  thisWeakProductsCollection.find().toArray();
+        res.send(result)
+    })
+        //fetch the this weak  Data From database
+        app.get('/newArrivals',async (req,res)=>{
+        const  result = await  newArrivalsCollection.find().toArray();
+        res.send(result)
+    })
+        //fetch the this weak  Data From database
+        app.get('/featureProducts',async (req,res)=>{
+        const  result = await  discountProductsCollection.find().toArray();
         res.send(result)
     })
 
