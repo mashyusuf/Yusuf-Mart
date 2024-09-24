@@ -64,7 +64,7 @@ export default function DiscountProducts() {
             {/* Product Info */}
             <div className="w-2/3 pl-4 relative">
               {/* Discount Label */}
-              <div className="bg-red-600 rounded-xl ml-4 text-white px-2 py-1 absolute top-0 left-0 text-sm">
+              <div className="bg-red-600 items-center rounded-xl ml-4 text-white px-2 py-1 absolute top-0 left-0 text-sm">
                 {product.discount}% OFF
               </div>
               {/* Product Name and Description */}
@@ -104,7 +104,6 @@ export default function DiscountProducts() {
                 })}
               </div>
               {/* Add to Cart Button */}
-              import {GrWorkshop} from 'react-icons/gr'; // Import the icon
               <button className="w-full border border-purple-600 text-purple-600 py-2 rounded-lg hover:bg-purple-700 hover:text-white transition duration-300 flex items-center justify-center gap-2">
                 <GrWorkshop className="text-lg" /> {/* Add the icon here */}
                 <span>Add to Cart</span>
@@ -115,7 +114,7 @@ export default function DiscountProducts() {
       </div>
 
       {/* View All Button */}
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-end mt-4">
         <button
           onClick={() => setShowAll(!showAll)}
           className="flex items-center justify-center gap-2 border border-purple-600 text-purple-600 bg-white hover:bg-purple-600 hover:text-white px-4 py-2 rounded transition duration-200"

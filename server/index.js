@@ -28,6 +28,8 @@ async function run() {
     const thisWeakProductsCollection = client.db('Yusuf-Mart').collection('thisWeak');
     const newArrivalsCollection = client.db('Yusuf-Mart').collection('new Arrivals');
     const discountProductsCollection = client.db('Yusuf-Mart').collection('FeatureProducts');
+    const superOfferProductsCollection = client.db('Yusuf-Mart').collection('super');
+    const bestSellesCollection = client.db('Yusuf-Mart').collection('bestSelles');
 
 
         //fetch the All  Data From database
@@ -40,14 +42,24 @@ async function run() {
         const  result = await  thisWeakProductsCollection.find().toArray();
         res.send(result)
     })
-        //fetch the this weak  Data From database
+        //fetch the this newArrivals Products Data From database
         app.get('/newArrivals',async (req,res)=>{
         const  result = await  newArrivalsCollection.find().toArray();
         res.send(result)
     })
-        //fetch the this weak  Data From database
+        //fetch the this feaatureProducts  Data From database
         app.get('/featureProducts',async (req,res)=>{
         const  result = await  discountProductsCollection.find().toArray();
+        res.send(result)
+    })
+        //fetch the this SUPER offer  2Data From database
+        app.get('/superProducts',async (req,res)=>{
+        const  result = await  superOfferProductsCollection.find().toArray();
+        res.send(result)
+    })
+        //fetch the this best selles  2Data From database
+        app.get('/bestSelles',async (req,res)=>{
+        const  result = await  bestSellesCollection.find().toArray();
         res.send(result)
     })
 
