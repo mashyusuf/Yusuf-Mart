@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import Loading from '../../../hooks/Loading';
 import Error from '../../../hooks/Error';
-import { GiBrightExplosion } from "react-icons/gi";
+
 export default function BestSelles() {
   const axiosPublic = useAxiosPublic();
   const { data: bestSelles = [], isError, isLoading } = useQuery({
@@ -28,7 +28,7 @@ export default function BestSelles() {
   }
 
   return (
-    <div className="grid lg:grid-cols-5 grid-cols-2 gap-4 p-4">
+    <div className="grid lg:grid-cols-5 sm:grid-cols-2 gap-4 p-4">
       {bestSelles.map((product, index) => (
         <div
           key={product._id}
@@ -109,7 +109,7 @@ export default function BestSelles() {
           <div className="mt-auto">
             {product.category === 'This Week Only' ? (
               <button className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full mb-4 hover:bg-purple-700 hover:text-white">
-                <GiBrightExplosion className="mr-2" /> Shop Now
+                <AiOutlineShoppingCart className="mr-2" /> Shop Now
               </button>
             ) : (
               <button className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full hover:bg-purple-700 hover:text-white">

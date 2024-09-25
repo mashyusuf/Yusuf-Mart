@@ -105,7 +105,7 @@ export default function NewArrivals() {
                 </div>
                 <div className="card-actions">
                   {/* Add to Cart Button with Icon */}
-                  <button className="w-full border border-purple-600 text-purple-600 py-2 rounded-lg hover:bg-purple-700 hover:text-white transition duration-300 flex items-center justify-center">
+                  <button className="w-full border border-purple-600 text-purple-600 py-2 rounded-full hover:bg-purple-700 hover:text-white transition duration-300 flex items-center justify-center">
                     <FaShoppingCart className="mr-2" />{" "}
                     {/* Add margin for spacing */}
                     <span>Add to Cart</span>

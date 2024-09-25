@@ -104,7 +104,7 @@ export default function DiscountProducts() {
                 })}
               </div>
               {/* Add to Cart Button */}
-              <button className="w-full border border-purple-600 text-purple-600 py-2 rounded-lg hover:bg-purple-700 hover:text-white transition duration-300 flex items-center justify-center gap-2">
+              <button className="w-full border border-purple-600 text-purple-600 py-2 rounded-full hover:bg-purple-700 hover:text-white transition duration-300 flex items-center justify-center gap-2">
                 <GrWorkshop className="text-lg" /> {/* Add the icon here */}
                 <span>Add to Cart</span>
               </button>

@@ -30,6 +30,7 @@ async function run() {
     const discountProductsCollection = client.db('Yusuf-Mart').collection('FeatureProducts');
     const superOfferProductsCollection = client.db('Yusuf-Mart').collection('super');
     const bestSellesCollection = client.db('Yusuf-Mart').collection('bestSelles');
+    const reviewsCollection = client.db('Yusuf-Mart').collection('reviews');
 
 
         //fetch the All  Data From database
@@ -60,6 +61,11 @@ async function run() {
         //fetch the this best selles  2Data From database
         app.get('/bestSelles',async (req,res)=>{
         const  result = await  bestSellesCollection.find().toArray();
+        res.send(result)
+    })
+        //fetch the this best selles  2Data From database
+        app.get('/reviews',async (req,res)=>{
+        const  result = await  reviewsCollection.find().toArray();
         res.send(result)
     })
 
