@@ -4,6 +4,7 @@ import logo from '../../../assets/logo.png'; // Use a fake logo image or replace
 import { IoSearchOutline } from "react-icons/io5";
 import { FiHeart } from "react-icons/fi";
 import { FaUserSecret } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -61,13 +62,13 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="bg-white lg:hidden">
           <ul className="p-4 space-y-2">
-            <li><a href="/">Home</a></li>
-            <li><a href="/shop">Shop</a></li>
-            <li><a href="/fruits-vegetables">Fruits & Vegetables</a></li>
-            <li><a href="/beverages">Beverages</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/trending">Trending Products</a></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/shop">Shop</Link></li>
+            <li><Link to="/fruits-vegetables">Fruits & Vegetables</Link></li>
+            <li><Link to="/beverages">Beverages</Link></li>
+            <li><Link to="/blog">Blog</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/trending">Trending Products</Link></li>
           </ul>
         </div>
       )}
