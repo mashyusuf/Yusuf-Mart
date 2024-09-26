@@ -42,24 +42,38 @@ async function run() {
 
     // Fetch filtered products based on query parameters
     app.get("/allData", async (req, res) => {
-      const { category, available, special } = req.query;
-
-      let query = {};
-
+      const { category, minPrice, maxPrice } = req.query;
+    
+      let filter = {};
+    
+      // If category is provided, add it to the filter
       if (category) {
-        query.category = category;
+        filter.category = category;
       }
-      if (available) {
-        query.available = available;
+    
+      // Add price filtering to the query
+      if (minPrice || maxPrice) {
+        filter.price = {};
+    
+        // Check if minPrice is provided and add it to the query
+        if (minPrice) {
+          filter.price.$gte = parseFloat(minPrice); // Filter products with price greater than or equal to minPrice
+        }
+    
+        // Check if maxPrice is provided and add it to the query
+        if (maxPrice) {
+          filter.price.$lte = parseFloat(maxPrice); // Filter products with price less than or equal to maxPrice
+        }
       }
-      if (special) {
-        query.special = { $in: special.split(",") }; // Allows filtering by multiple special types
+    
+      try {
+        const result = await allCategoryCollection.find(filter).toArray();
+        res.send(result);
+      } catch (error) {
+        res.status(500).send({ message: "Error fetching data", error });
       }
-
-      const result = await allCategoryCollection.find(query).toArray();
-      res.send(result);
     });
-
+    
     //fetch the this weak  Data From database
     app.get("/thisWeakProducts", async (req, res) => {
       const result = await thisWeakProductsCollection.find().toArray();

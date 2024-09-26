@@ -8,7 +8,7 @@
       "exp": "2024-09-25",
       "discount": 10,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "special": "Trending Product",
       "price": 3.50,
       "productNumber": 1
@@ -22,7 +22,7 @@
       "exp": "2024-09-22",
       "discount": 5,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "special": "",  
       "productNumber": 2
     },
@@ -35,7 +35,7 @@
       "exp": "2024-09-20",
       "discount": 0,
       "available": "Out of Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "special": "New Arrival",
       "price": 2.50,
       "productNumber": 3
@@ -91,7 +91,7 @@
       "exp": "2025-03-05",
       "discount": 25,
       "available": "Out of Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "special": "",  
       "price": 18.99,
       "productNumber": 7
@@ -147,7 +147,7 @@
       "exp": "2024-09-25",
       "discount": 5,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "special": "New Arrival",
       "price": 1.20,
       "productNumber": 11
@@ -161,7 +161,7 @@
       "exp": "2024-09-22",
       "discount": 10,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "special": "",  
       "price": 5.50,
       "productNumber": 12
@@ -175,7 +175,7 @@
       "exp": "2025-09-12",
       "discount": 0,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "special": "Best Seller",
       "price": 1.50,
       "productNumber": 13
@@ -216,7 +216,7 @@
       "exp": "2025-09-03",
       "discount": 0,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "special": "Best Seller",
       "price": 15.00,
       "productNumber": 16
@@ -271,7 +271,7 @@
       "exp": "2025-03-05",
       "discount": 12,
       "available": "In Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "price": 10.00,
       "productNumber": 17
     },
@@ -392,7 +392,7 @@
       "exp": "2025-03-05",
       "discount": 10,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "price": 3.99
     },
     {
@@ -405,7 +405,7 @@
       "exp": "2024-09-22",
       "discount": 5,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "price": 2.50
     },
     {
@@ -458,7 +458,7 @@
       "exp": "2024-09-15",
       "discount": 5,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "special": "Trending Product",
       "price": 2.99
     },
@@ -537,7 +537,7 @@
       "exp": "2026-09-05",
       "discount": 12,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "special": "New Arrival",
       "price": 9.99
     },
@@ -551,7 +551,7 @@
       "exp": "2025-03-08",
       "discount": 8,
       "available": "In Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "price": 4.49
     },
     {
@@ -591,7 +591,7 @@
       "exp": "2024-09-25",
       "discount": 10,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "special": "New Arrival",
       "price": 4.99
     },
@@ -618,7 +618,7 @@
       "exp": "2024-09-18",
       "discount": 12,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "price": 6.49
     },
     {
@@ -631,7 +631,7 @@
       "exp": "2024-09-20",
       "discount": 5,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "special": "Trending Product",
       "price": 1.99
     },
@@ -737,7 +737,7 @@
       "exp": "2024-09-24",
       "discount": 12,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "price": 70
     },
     {
@@ -750,7 +750,7 @@
       "exp": "2024-09-23",
       "discount": 15,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "price": 40
     },
     {
@@ -790,7 +790,7 @@
       "exp": "2025-09-16",
       "discount": 10,
       "available": "In Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "price": 55
     },
     {
@@ -868,7 +868,7 @@
       "exp": "2024-09-24",
       "discount": 10,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "special": "Trending Product",
       "price": 3.99
     },
@@ -882,7 +882,7 @@
       "exp": "2024-09-22",
       "discount": 12,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "price": 12.49
     },
     {
@@ -895,7 +895,7 @@
       "exp": "2024-09-23",
       "discount": 8,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "price": 5.99
     },
     {
@@ -935,7 +935,7 @@
       "exp": "2025-03-12",
       "discount": 10,
       "available": "In Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "price": 19.99
     },
     {
@@ -1014,7 +1014,7 @@
       "exp": "2024-09-25",
       "discount": 0,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "price": 8.99
     },{
       "productNumber": 74,
@@ -1026,7 +1026,7 @@
       "exp": "2024-09-23",
       "discount": 0,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "price": 6.99
     },
     {
@@ -1039,7 +1039,7 @@
       "exp": "2024-09-24",
       "discount": 0,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "price": 4.85
     },
     {
@@ -1079,7 +1079,7 @@
       "exp": "2025-09-16",
       "discount": 0,
       "available": "In Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "price": 6.99
     },
     {
@@ -1144,7 +1144,7 @@
       "exp": "2024-09-24",
       "discount": 0,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "price": 25.99
     },
     {
@@ -1157,7 +1157,7 @@
       "exp": "2024-09-23",
       "discount": 0,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "price": 9.99
     },
     {
@@ -1170,7 +1170,7 @@
       "exp": "2024-09-22",
       "discount": 0,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "price": 5.49
     },
     {
@@ -1209,7 +1209,7 @@
       "exp": "2025-09-16",
       "discount": 0,
       "available": "In Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "price": 6.49
     },
     {
@@ -1274,7 +1274,7 @@
       "exp": "2024-09-24",
       "discount": 0,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "price": 3.49
     },
     {
@@ -1287,7 +1287,7 @@
       "exp": "2024-09-23",
       "discount": 0,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "price": 8.99
     },
     {
@@ -1300,7 +1300,7 @@
       "exp": "2024-09-22",
       "discount": 0,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "price": 2.99
     },
     {
@@ -1339,7 +1339,7 @@
       "exp": "2025-03-16",
       "discount": 0,
       "available": "In Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "price": 19.99
     },
     {
@@ -1404,7 +1404,7 @@
       "exp": "2024-09-25",
       "discount": 0,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "price": 0.99
     },
     {
@@ -1417,7 +1417,7 @@
       "exp": "2024-09-23",
       "discount": 0,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "price": 10.99
     },
     {
@@ -1430,7 +1430,7 @@
       "exp": "2024-09-22",
       "discount": 0,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "price": 3.49
     },
     {
@@ -1469,7 +1469,7 @@
       "exp": "2025-03-16",
       "discount": 0,
       "available": "In Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "price": 19.99
     },
     {
@@ -1535,7 +1535,7 @@
       "exp": "2024-09-26",
       "discount": 0,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "price": 1.49
     },
     {
@@ -1548,7 +1548,7 @@
       "exp": "2024-09-22",
       "discount": 0,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "price": 12.99
     },{
       "productNumber": 115,
@@ -1560,7 +1560,7 @@
       "exp": "2024-09-23",
       "discount": 0,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "price": 3.99
     },
     {
@@ -1599,7 +1599,7 @@
       "exp": "2025-09-16",
       "discount": 0,
       "available": "In Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "price": 9.99
     },
     {
@@ -1665,7 +1665,7 @@
       "exp": "2024-09-26",
       "discount": 0,
       "available": "In Stock",
-      "category": "Fruits & Vegetables",
+      "category": "Fruits and Vegetables",
       "price": 1.49
     },
     {
@@ -1678,7 +1678,7 @@
       "exp": "2024-09-24",
       "discount": 0,
       "available": "In Stock",
-      "category": "Meats & Seafood",
+      "category": "Meats and Seafood",
       "price": 8.99
     },
     {
@@ -1691,7 +1691,7 @@
       "exp": "2024-09-23",
       "discount": 0,
       "available": "In Stock",
-      "category": "Bakery & Dairy",
+      "category": "Bakery and Dairy",
       "price": 3.49
     },
     {
@@ -1730,7 +1730,7 @@
       "exp": "2025-09-16",
       "discount": 0,
       "available": "In Stock",
-      "category": "Baby & Pregnancy",
+      "category": "Baby and Pregnancy",
       "price": 6.99
     }
   ]
