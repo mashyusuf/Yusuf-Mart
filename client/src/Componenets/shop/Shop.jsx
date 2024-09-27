@@ -5,35 +5,41 @@ import Loading from "../../hooks/Loading";
 import Error from "../../hooks/Error";
 import Filter from "../Filter/Filter";
 import { BsShop } from "react-icons/bs";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Importing icons for pagination
 
 export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100);
+  const [specialOffer, setSpecialOffer] = useState("");
+  const [sortBy, setSortBy] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // State for current page
   const axiosPublic = useAxiosPublic();
 
-  const { data: allProducts = [], isError, isLoading } = useQuery({
-    queryKey: ["allProducts", selectedCategory, minPrice, maxPrice],
+  const { data: { products = [], totalPages = 1 } = {}, isError, isLoading } = useQuery({
+    queryKey: ["allProducts", selectedCategory, minPrice, maxPrice, specialOffer, sortBy, currentPage],
     queryFn: async () => {
       try {
-        const res = await axiosPublic(`/allData?category=${selectedCategory}&minPrice=${minPrice}&maxPrice=${maxPrice}`);
-        return res.data;
+        const res = await axiosPublic(
+          `/allData?category=${selectedCategory}&minPrice=${minPrice}&maxPrice=${maxPrice}&specialOffer=${specialOffer}&sortBy=${sortBy}&page=${currentPage}&limit=12`
+        );
+        return res.data; // This now returns products and totalPages
       } catch (err) {
         console.log("Error fetching all data", err);
       }
     },
   });
 
-  const handleFilter = () => {
-    // This function will trigger the filter when button is clicked
-    // No additional logic needed as the query will refetch on state change
-  };
+  const handleFilter = () => {};
+  
   const applyFilter = () => {
-    // This will trigger a re-fetch of the data with the current filters
     setMinPrice(minPrice);
     setMaxPrice(maxPrice);
+    setSpecialOffer(specialOffer);
+    setSortBy(sortBy);
+    setCurrentPage(1); // Reset to first page on filter
   };
-  
+
   const truncate = (text, wordLimit) => {
     const words = text.split(" ");
     return words.length <= wordLimit ? text : words.slice(0, wordLimit).join(" ") + " ...";
@@ -43,20 +49,19 @@ export default function Shop() {
   if (isError) return <Error />;
 
   return (
-    <div className="container mx-auto mt-5 mb-5 flex">
-      {/* Left Sidebar for Filters */}
-      <Filter 
-        selectedCategory={selectedCategory} 
-        setSelectedCategory={setSelectedCategory} 
-        minPrice={minPrice} 
-        setMinPrice={setMinPrice} 
-        maxPrice={maxPrice} 
+    <div className="container mx-auto mt-5 mb-5 flex ">
+     <Filter
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        minPrice={minPrice}
+        setMinPrice={setMinPrice}
+        maxPrice={maxPrice}
         setMaxPrice={setMaxPrice}
-        handleFilter={handleFilter} 
-        applyFilter={applyFilter} // Pass handleFilter function
+        applyFilter={applyFilter}
+        specialOffer={specialOffer}
+        setSpecialOffer={setSpecialOffer}
+        setSortOrder={setSortBy}
       />
-
-      {/* Products Section */}
       <div className="w-3/4 px-2">
         <div className="md:flex text-center md:ml-4 items-center gap-2">
           <h1 className="text-xl font-bold text-black mb-1">Shop All Products</h1>
@@ -65,10 +70,9 @@ export default function Shop() {
           </p>
         </div>
 
-        {/* Grid Layout for Products */}
         <div className="grid grid-cols-2 px-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-6">
-          {allProducts.map((product) => {
-            // Determine background color and emoji based on product category
+          {products.map((product) => {
+            /// Determine background color and emoji based on product category
            let badgeClass = "";
            let emoji = "";
 
@@ -119,12 +123,21 @@ export default function Shop() {
                break;
              default:
                badgeClass = "bg-gray-500";
-            }
-
+           }
             return (
-              <div key={product._id} className="card bg-white shadow-xl rounded-lg overflow-hidden">
-                <figure>
-                  <img src={product.image} alt={product.name} className="h-56 w-full object-cover" />
+              <div key={product._id} className="card bg-white shadow-xl rounded-lg overflow-hidden relative">
+                <figure className="relative">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="h-56 w-full object-cover"
+                  />
+                  {product.special && (
+                    <div className="absolute top-0 right-0 bg-yellow-500 text-white px-2 py-1 rounded-lg flex items-center text-xs font-bold">
+                      <span>✨</span>
+                      <p className="ml-1">{product.special}</p>
+                    </div>
+                  )}
                 </figure>
                 <div className="card-body p-4">
                   <div className={`badge ${badgeClass} text-white mb-2 flex items-center`}>
@@ -137,13 +150,17 @@ export default function Shop() {
                     {truncate(product.description, 6)}
                   </p>
                   <div className="flex items-center justify-evenly mb-1">
-                    <p className="text-2xl font-extrabold text-red-600">${product.price}</p>
-                    <p className="text-xl font-bold line-through text-gray-500">${product.discount}</p>
+                    <p className="text-2xl font-extrabold text-red-600">
+                      ${product.price}
+                    </p>
+                    <p className="text-xl font-bold line-through text-gray-500">
+                      ${product.discount}
+                    </p>
                   </div>
 
                   <div className="flex items-center mb-1">
                     <p className="flex items-center text-xl text-yellow-500">
-                      <span className="text-gray-600 text-base"> Rating</span>: {product.rating} ⭐
+                      <span className="text-gray-600 text-base">Rating</span>: {product.rating} ⭐
                     </p>
                     <p className={`ml-3 ${product.available === "In Stock" ? "text-green-600" : "text-red-600"}`}>
                       {product.available === "In Stock" ? "In Stock" : "Out of Stock"}
@@ -153,7 +170,7 @@ export default function Shop() {
                   <div className="card-actions">
                     <button className="w-full flex items-center justify-center border border-green-600 text-green-600 py-2 rounded-full hover:bg-green-700 hover:text-white transition-all">
                       <BsShop className="inline mr-1" />
-                      Buy Now
+                      Shop Now
                     </button>
                   </div>
                 </div>
@@ -161,6 +178,53 @@ export default function Shop() {
             );
           })}
         </div>
+
+        {/* Pagination */}
+<div className="flex justify-center mt-4">
+  <button 
+    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+    className="border border-purple-600 text-purple-600 px-3 py-1 rounded-l-lg hover:bg-purple-600 hover:text-white transition-all"
+    disabled={currentPage === 1}
+  >
+    <FaChevronLeft />
+  </button>
+
+  {/* Page Numbers */}
+  {(() => {
+    const pageNumbers = [];
+    const totalPagesToShow = 4; // Default pages to show
+    const startPage = Math.max(1, currentPage - Math.floor(totalPagesToShow / 2));
+    const endPage = Math.min(totalPages, startPage + totalPagesToShow - 1);
+    
+    // Adjust startPage if endPage is at the totalPages
+    if (endPage === totalPages) {
+      startPage = Math.max(1, totalPages - totalPagesToShow + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => setCurrentPage(i)}
+          className={`border border-purple-600 text-purple-600 px-3 py-1 mx-1 rounded-lg transition-all ${currentPage === i ? 'bg-purple-700 text-white' : 'hover:bg-purple-600 hover:text-white'}`}
+        >
+          {i}
+        </button>
+      );
+    }
+    
+    return pageNumbers;
+  })()}
+
+  <button 
+    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+    className="border border-purple-600 text-purple-600 px-3 py-1 rounded-r-lg hover:bg-purple-600 hover:text-white transition-all"
+    disabled={currentPage === totalPages}
+  >
+    <FaChevronRight />
+  </button>
+</div>
+
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ export default function Navbar() {
       <div className="flex justify-between items-center px-4 py-4">
         {/* Logo and Delivery on Left */}
         <div className="flex items-center lg:w-1/4 md:w-1/4 w-1/2">
-          <img src={logo} alt="Logo" className="w-16 h-16" />
+          <Link to={'/'}><img src={logo} alt="Logo" className="w-20 h-16" /></Link>
           <div className="hidden md:flex items-center ml-4">
             <FaMapMarkerAlt className="text-gray-700 mr-2" />
             <span className="text-sm">Deliver to all</span>

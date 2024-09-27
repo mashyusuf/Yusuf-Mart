@@ -42,9 +42,13 @@ async function run() {
 
     // Fetch filtered products based on query parameters
     app.get("/allData", async (req, res) => {
-      const { category, minPrice, maxPrice } = req.query;
+      const { category, minPrice, maxPrice, specialOffer, sortBy, page = 1, limit = 12 } = req.query;
     
       let filter = {};
+      const options = {
+        skip: (page - 1) * limit,
+        limit: parseInt(limit),
+      };
     
       // If category is provided, add it to the filter
       if (category) {
@@ -54,24 +58,40 @@ async function run() {
       // Add price filtering to the query
       if (minPrice || maxPrice) {
         filter.price = {};
-    
-        // Check if minPrice is provided and add it to the query
         if (minPrice) {
-          filter.price.$gte = parseFloat(minPrice); // Filter products with price greater than or equal to minPrice
+          filter.price.$gte = parseFloat(minPrice);
         }
-    
-        // Check if maxPrice is provided and add it to the query
         if (maxPrice) {
-          filter.price.$lte = parseFloat(maxPrice); // Filter products with price less than or equal to maxPrice
+          filter.price.$lte = parseFloat(maxPrice);
         }
+      }
+    
+      // Add special offer filtering
+      if (specialOffer) {
+        filter.special = specialOffer;
       }
     
       try {
-        const result = await allCategoryCollection.find(filter).toArray();
-        res.send(result);
+        const sortOption = sortBy === 'highToLow' ? { price: -1 } : sortBy === 'lowToHigh' ? { price: 1 } : {};
+        
+        const totalItems = await allCategoryCollection.countDocuments(filter);
+        const totalPages = Math.ceil(totalItems / limit);
+    
+        const products = await allCategoryCollection.find(filter).sort(sortOption).skip(options.skip).limit(options.limit).toArray();
+        
+        res.send({ products, totalPages, currentPage: parseInt(page) });
       } catch (error) {
         res.status(500).send({ message: "Error fetching data", error });
       }
+    });
+    
+    
+    
+    app.get("/category/:category", async (req, res) => {
+      const { category } = req.params;
+      const query = category ? { category } : {}; // If category is provided, filter by it
+      const result = await allCategoryCollection.find(query).toArray();
+      res.send(result);
     });
     
     //fetch the this weak  Data From database

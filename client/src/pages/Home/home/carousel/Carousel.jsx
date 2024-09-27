@@ -18,8 +18,8 @@ export default function Carousel() {
         className="h-auto"
       >
         <div className="relative">
-          <img src={image1} alt="Carousel Item 1" className="w-full h-96 object-cover" />
-          <div className="absolute top-0 left-0 w-1/2 p-10 bg-gradient-to-r from-purple-500 to-transparent">
+          <img src={image1} alt="Carousel Item 1" className="w-full h-[450px] object-cover" />
+          <div className="absolute top-0 left-0 w-1/2 h-full p-10 bg-gradient-to-r from-purple-500 to-transparent">
             <span className="text-green-600 font-semibold">Weekend Discount</span>
             <h2 className="text-4xl font-bold text-white mt-4 mb-4">
               Get the best quality products at the lowest prices
@@ -40,8 +40,8 @@ export default function Carousel() {
         </div>
 
         <div className="relative">
-          <img src={image2} alt="Carousel Item 2" className="w-full h-96 object-cover" />
-          <div className="absolute top-0 left-0 w-1/2 p-10  bg-gradient-to-r from-purple-500 to-transparent">
+          <img src={image2} alt="Carousel Item 2" className="w-full h-[450px] object-cover" />
+          <div className="absolute top-0 left-0 w-1/2 h-full p-10  bg-gradient-to-r from-purple-500 to-transparent">
             <span className="text-green-600 font-semibold">Weekend Discount</span>
             <h2 className="text-4xl font-bold text-white mt-4 mb-4">
               Get the best quality products at the lowest prices
@@ -62,8 +62,8 @@ export default function Carousel() {
         </div>
 
         <div className="relative">
-          <img src={image3} alt="Carousel Item 3" className="w-full h-96 object-cover" />
-          <div className="absolute top-0 left-0 w-1/2 p-10  bg-gradient-to-r from-purple-500 to-transparent">
+          <img src={image3} alt="Carousel Item 3" className="w-full h-[450px] object-cover" />
+          <div className="absolute top-0 left-0 w-1/2 h-full p-10  bg-gradient-to-r from-purple-500 to-transparent">
             <span className="text-green-600 font-semibold">Weekend Discount</span>
             <h2 className="text-4xl font-bold text-white mt-4 mb-4">
               Get the best quality products at the lowest prices
@@ -84,8 +84,8 @@ export default function Carousel() {
         </div>
 
         <div className="relative">
-          <img src={image4} alt="Carousel Item 4" className="w-full h-96 object-cover" />
-          <div className="absolute top-0 left-0 w-1/2 p-8  bg-opacity-80">
+          <img src={image4} alt="Carousel Item 4" className="w-full h-[450px] object-cover" />
+          <div className="absolute top-0 left-0 w-1/2 h-full p-8  bg-opacity-80">
             <span className="text-green-600 font-semibold">Weekend Discount</span>
             <h2 className="text-4xl font-bold text-purple-700 mt-4 mb-4">
               Get the best quality products at the lowest prices

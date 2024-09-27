@@ -4,8 +4,10 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid';
 import { FaCarrot, FaFish, FaBreadSlice, FaCoffee, FaFirstAid, FaHome, FaBaby } from 'react-icons/fa';
 import Carousel from '../../Home/home/carousel/Carousel';
 import { Link } from 'react-router-dom';
-
-export default function CategorySection() {
+import { MdOutlinePets } from "react-icons/md";
+import { GiFrozenOrb } from "react-icons/gi";
+import { GiPopcorn } from "react-icons/gi";
+export default function CategorySection({ onSelectCategory }) {
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 640);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCategoriesVisible, setIsCategoriesVisible] = useState(true);
@@ -32,73 +34,44 @@ export default function CategorySection() {
   return (
     <div className="flex flex-col lg:flex-row container mx-auto">
       {/* Sidebar with Categories */}
-      <div
-        className={`w-full lg:w-1/4 bg-gray-100 py-4  ${isMobileView ? 'block' : 'hidden lg:block'}`}
-      >
+      <div className={`w-full lg:w-1/4 bg-gray-100 py-4 ${isMobileView ? 'block' : 'hidden lg:block'}`}>
         {isMobileView ? (
-          <>
-            <Menu>
-              <MenuButton
-                onClick={toggleMenu}
-                className="inline-flex justify-between w-full items-center rounded-md border-2 border-purple-400 py-1.5 px-3 text-sm font-semibold text-black shadow-inner focus:outline-none"
-              >
-                All Categories
-                {isMenuOpen ? (
-                  <ChevronUpIcon className="h-5 w-5 text-black/60" />
-                ) : (
-                  <ChevronDownIcon className="h-5 w-5 text-black/60" />
-                )}
-              </MenuButton>
-              <MenuItems
-                className={`mt-2 w-full origin-top-right rounded-md border border-gray-200 bg-white shadow-lg ${isMenuOpen ? 'block' : 'hidden'}`}
-              >
-                <MenuItem>
+          <Menu>
+            <MenuButton
+              onClick={toggleMenu}
+              className="flex justify-between items-center rounded-md border-2 border-purple-400 py-1.5 px-3 text-sm font-semibold text-black shadow-inner focus:outline-none w-full"
+            >
+              All Categories
+              {isMenuOpen ? (
+                <ChevronUpIcon className="h-5 w-5 text-black/60" />
+              ) : (
+                <ChevronDownIcon className="h-5 w-5 text-black/60" />
+              )}
+            </MenuButton>
+            <MenuItems className={`mt-2 w-full origin-top-right rounded-md border border-gray-200 bg-white shadow-lg ${isMenuOpen ? 'block' : 'hidden'}`}>
+              {[
+                { icon: <FaCarrot className="text-orange-500" />, label: "Fruits and Vegetables" },
+                { icon: <FaFish className="text-purple-500" />, label: "Meats and Seafood" },
+                { icon: <FaBreadSlice className="text-yellow-500" />, label: "Bakery and Dairy" },
+                { icon: <FaCoffee className="text-brown-500" />, label: "Beverages" },
+                { icon: <FaFirstAid className="text-red-500" />, label: "Healthcare" },
+                { icon: <FaHome className="text-green-500" />, label: "Household Needs" },
+                { icon: <FaBaby className="text-pink-500" />, label: "Baby and Pregnancy" },
+                { icon: <MdOutlinePets className="text-black" />, label: "Pet Supplies" },
+                { icon: <GiFrozenOrb className="text-sky-500" />, label: "Frozen Foods" },
+                { icon: <GiPopcorn className="text-yellow-500" />, label: "Snacks and Confectionery" }
+              ].map((item, index) => (
+                <MenuItem key={index}>
                   <div className="flex items-center p-2 space-x-2 hover:bg-gray-100 cursor-pointer text-purple-600">
-                    <FaCarrot className="text-orange-500" />
-                    <span>Fruits & Vegetables</span>
+                    {item.icon}
+                    <span>{item.label}</span>
                   </div>
                 </MenuItem>
-                <MenuItem>
-                  <div className="flex items-center p-2 space-x-2 hover:bg-gray-100 cursor-pointer text-purple-600">
-                    <FaFish className="text-blue-500" />
-                    <span>Meats & Seafood</span>
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div className="flex items-center p-2 space-x-2 hover:bg-gray-100 cursor-pointer text-purple-600">
-                    <FaBreadSlice className="text-yellow-500" />
-                    <span>Bakery & Dairy</span>
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div className="flex items-center p-2 space-x-2 hover:bg-gray-100 cursor-pointer text-purple-600">
-                    <FaCoffee className="text-brown-500" />
-                    <span>Beverages</span>
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div className="flex items-center p-2 space-x-2 hover:bg-gray-100 cursor-pointer text-purple-600">
-                    <FaFirstAid className="text-red-500" />
-                    <span>Healthcare</span>
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div className="flex items-center p-2 space-x-2 hover:bg-gray-100 cursor-pointer text-purple-600">
-                    <FaHome className="text-green-500" />
-                    <span>Household Needs</span>
-                  </div>
-                </MenuItem>
-                <MenuItem>
-                  <div className="flex items-center p-2 space-x-2 hover:bg-gray-100 cursor-pointer text-purple-600">
-                    <FaBaby className="text-pink-500" />
-                    <span>Baby & Pregnancy</span>
-                  </div>
-                </MenuItem>
-              </MenuItems>
-            </Menu>
-          </>
+              ))}
+            </MenuItems>
+          </Menu>
         ) : (
-          <>
+          <div>
             <div className="flex justify-between items-center">
               <button
                 onClick={toggleCategoriesVisibility}
@@ -109,51 +82,39 @@ export default function CategorySection() {
               </button>
             </div>
             {/* Sidebar categories for medium and large devices */}
-            <ul className={`mt-4  space-y-2 ${isCategoriesVisible ? 'block' : 'hidden'}`}>
-              <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center space-x-2 text-purple-600">
-                <FaCarrot className="text-orange-500" />
-                <span>Fruits & Vegetables</span>
-              </li>
-              <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center space-x-2 text-purple-600">
-                <FaFish className="text-blue-500" />
-                <span>Meats & Seafood</span>
-              </li>
-              <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center space-x-2 text-purple-600">
-                <FaBreadSlice className="text-yellow-500" />
-                <span>Bakery & Dairy</span>
-              </li>
-              <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center space-x-2 text-purple-600">
-                <FaCoffee className="text-brown-500" />
-                <span>Beverages</span>
-              </li>
-              <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center space-x-2 text-purple-600">
-                <FaFirstAid className="text-red-500" />
-                <span>Healthcare</span>
-              </li>
-              <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center space-x-2 text-purple-600">
-                <FaHome className="text-green-500" />
-                <span>Household Needs</span>
-              </li>
-              <li className="hover:bg-gray-200 p-2  rounded-md cursor-pointer flex items-center space-x-2 text-purple-600">
-                <FaBaby className="text-pink-500" />
-                <span>Baby & Pregnancy</span>
-              </li>
+            <ul className={`mt-2 space-y-0 ${isCategoriesVisible ? 'block' : 'hidden'}`}>
+              {[
+                { icon: <FaCarrot className="text-orange-500" />, label: "Fruits and Vegetables" },
+                { icon: <FaFish className="text-purple-500" />, label: "Meats and Seafood" },
+                { icon: <FaBreadSlice className="text-yellow-500" />, label: "Bakery and Dairy" },
+                { icon: <FaCoffee className="text-brown-500" />, label: "Beverages" },
+                { icon: <FaFirstAid className="text-red-500" />, label: "Healthcare" },
+                { icon: <FaHome className="text-green-500" />, label: "Household Needs" },
+                { icon: <FaBaby className="text-pink-500" />, label: "Baby and Pregnancy" },
+                { icon: <MdOutlinePets className="text-black" />, label: "Pet Supplies" },
+                { icon: <GiFrozenOrb className="text-sky-500" />, label: "Frozen Foods" },
+                { icon: <GiPopcorn className="text-yellow-500" />, label: "Snacks and Confectionery" }
+              ].map((item, index) => (
+                <li key={index} className="flex items-center p-2 space-x-2 hover:bg-gray-100 cursor-pointer text-purple-600" onClick={() => onSelectCategory(item.label)}>
+                  {item.icon}
+                  <span>{item.label}</span>
+                </li>
+              ))}
             </ul>
-          </>
+          </div>
         )}
       </div>
 
       {/* Carousel Section */}
-      
       <div className="w-full lg:w-3/4 p-4">
-      <div className="hidden lg:flex justify-between pb-4">
-          <Link to="/" className="text-gray-700 hover:text-blue-600">Home</Link>
-          <Link to="/shop" className="text-gray-700 hover:text-blue-600">Shop</Link>
-          <Link to="/fruits-vegetables" className="text-gray-700 hover:text-blue-600">Fruits & Vegetables</Link>
-          <Link to="/beverages" className="text-gray-700 hover:text-blue-600">Beverages</Link>
-          <Link to="/blog" className="text-gray-700 hover:text-blue-600">Blog</Link>
-          <Link to="/contact" className="text-gray-700 hover:text-blue-600">Contact</Link>
-          <Link to="/trending" className="text-gray-700 hover:text-blue-600">Trending Products</Link>
+        <div className="hidden lg:flex justify-between pb-4">
+          <Link to="/" className="text-gray-700 hover:text-purple-600">Home</Link>
+          <Link to="/shop" className="text-gray-700 hover:text-purple-600">Shop</Link>
+          <Link to="/fruits-vegetables" className="text-gray-700 hover:text-purple-600">Fruits & Vegetables</Link>
+          <Link to="/beverages" className="text-gray-700 hover:text-purple-600">Beverages</Link>
+          <Link to="/blog" className="text-gray-700 hover:text-purple-600">Blog</Link>
+          <Link to="/contact" className="text-gray-700 hover:text-purple-600">Contact</Link>
+          <Link to="/trending" className="text-gray-700 hover:text-purple-600">Trending Products</Link>
         </div>
         <Carousel />
       </div>
