@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { FaFilterCircleDollar } from "react-icons/fa6";
 
-export default function Filter({ 
-  selectedCategory, 
-  setSelectedCategory, 
-  minPrice, 
-  setMinPrice, 
-  maxPrice, 
-  setMaxPrice, 
+export default function  Filter  ({
+  selectedCategory,
+  setSelectedCategory,
+  minPrice,
+  setMinPrice,
+  maxPrice,
+  setMaxPrice,
   applyFilter,
-  specialOffer, 
+  specialOffer,
   setSpecialOffer,
-  setSortOrder, // Add this prop to set the sorting order
+  setSortOrder,
 }) {
   const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
 
@@ -124,6 +124,24 @@ export default function Filter({
         </select>
       </div>
 
+      {/* Special Offers */}
+      <div className="mb-4 mt-4">
+        <h3 className="font-semibold text-black flex items-center">
+          Special Offers <span className="ml-2" role="img" aria-label="tag">🏷️</span>
+        </h3>
+        <hr className="my-2 border-purple-600" />
+        <select
+        value={specialOffer}
+        onChange={(e) => setSpecialOffer(e.target.value)}
+        className="mt-1 block w-full p-2 border border-green-600 rounded"
+      >
+        <option value="">All Offers</option>
+        <option value="Only for this Week">🔥 Only for this Week</option>
+        <option value="New Arrival">🆕 New Arrival</option>
+        <option value="Best Seller">🏆 Best Seller</option>
+        <option value="Trending Product">📈 Trending Product</option>
+      </select>
+      </div>
       {/* Filter Button */}
       <button
         onClick={applyFilter}
@@ -132,25 +150,6 @@ export default function Filter({
         <FaFilterCircleDollar className="text-base mr-2" />
         Filter
       </button>
-
-      {/* Special Offers */}
-      <div className="mb-4 mt-4">
-        <h3 className="font-semibold text-black flex items-center">
-          Special Offers <span className="ml-2" role="img" aria-label="tag">🏷️</span>
-        </h3>
-        <hr className="my-2 border-purple-600" />
-        <select
-          className="mt-1 block w-full p-2 border border-green-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={specialOffer}
-          onChange={(e) => setSpecialOffer(e.target.value)} 
-        >
-          <option value="">All Offers</option>
-          <option value="Only for this Week">🔥 Only for this Week</option>
-          <option value="New Arrival">🆕 New Arrival</option>
-          <option value="Best Seller">🏆 Best Seller</option>
-          <option value="Trending Product">📈 Trending Product</option>
-        </select>
-      </div>
     </div>
   );
 }

@@ -6,14 +6,15 @@ import Error from "../../hooks/Error";
 import Filter from "../Filter/Filter";
 import { BsShop } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Importing icons for pagination
-
+import { GoArrowLeft } from "react-icons/go";
+import { Link } from "react-router-dom";
 export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [minPrice, setMinPrice] = useState(0);
+  const [minPrice, setMinPrice] = useState(0); 
   const [maxPrice, setMaxPrice] = useState(100);
   const [specialOffer, setSpecialOffer] = useState("");
   const [sortBy, setSortBy] = useState("");
-  const [currentPage, setCurrentPage] = useState(1); // State for current page
+  const [currentPage, setCurrentPage] = useState(1);
   const axiosPublic = useAxiosPublic();
 
   const { data: { products = [], totalPages = 1 } = {}, isError, isLoading } = useQuery({
@@ -37,7 +38,7 @@ export default function Shop() {
     setMaxPrice(maxPrice);
     setSpecialOffer(specialOffer);
     setSortBy(sortBy);
-    setCurrentPage(1); // Reset to first page on filter
+    setCurrentPage(1); 
   };
 
   const truncate = (text, wordLimit) => {
@@ -50,7 +51,8 @@ export default function Shop() {
 
   return (
     <div className="container mx-auto mt-5 mb-5 flex ">
-     <Filter
+     
+      <Filter
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
         minPrice={minPrice}
@@ -63,11 +65,17 @@ export default function Shop() {
         setSortOrder={setSortBy}
       />
       <div className="w-3/4 px-2">
-        <div className="md:flex text-center md:ml-4 items-center gap-2">
+        <div className="md:flex justify-between text-center md:ml-4 items-center gap-2">
+          <div className="flex items-center gap-2">
           <h1 className="text-xl font-bold text-black mb-1">Shop All Products</h1>
           <p className="text-sm text-gray-500">
             Explore our wide range of categories and find the best deals!
           </p>
+          </div>
+         <div>
+         <Link to={'/'}> <button className="flex items-center border border-purple-600 text-purple-600 px-3 py-1 mx-1 rounded-lg transition-all"> <GoArrowLeft />Home </button></Link>
+         
+         </div>
         </div>
 
         <div className="grid grid-cols-2 px-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-6">
@@ -179,52 +187,51 @@ export default function Shop() {
           })}
         </div>
 
-        {/* Pagination */}
-<div className="flex justify-center mt-4">
-  <button 
-    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-    className="border border-purple-600 text-purple-600 px-3 py-1 rounded-l-lg hover:bg-purple-600 hover:text-white transition-all"
-    disabled={currentPage === 1}
-  >
-    <FaChevronLeft />
-  </button>
+      {/* Pagination */}
+      <div className="flex justify-center mt-4">
+          <button 
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            className="border border-purple-600 text-purple-600 px-3 py-1 rounded-l-lg hover:bg-purple-600 hover:text-white transition-all"
+            disabled={currentPage === 1}
+          >
+            <FaChevronLeft />
+          </button>
 
-  {/* Page Numbers */}
-  {(() => {
-    const pageNumbers = [];
-    const totalPagesToShow = 4; // Default pages to show
-    const startPage = Math.max(1, currentPage - Math.floor(totalPagesToShow / 2));
-    const endPage = Math.min(totalPages, startPage + totalPagesToShow - 1);
-    
-    // Adjust startPage if endPage is at the totalPages
-    if (endPage === totalPages) {
-      startPage = Math.max(1, totalPages - totalPagesToShow + 1);
-    }
+          {/* Page Numbers */}
+          {(() => {
+            const pageNumbers = [];
+            const totalPagesToShow = 4; // Default pages to show
+            let startPage = Math.max(1, currentPage - Math.floor(totalPagesToShow / 2));
+            let endPage = Math.min(totalPages, startPage + totalPagesToShow - 1);
 
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(
-        <button
-          key={i}
-          onClick={() => setCurrentPage(i)}
-          className={`border border-purple-600 text-purple-600 px-3 py-1 mx-1 rounded-lg transition-all ${currentPage === i ? 'bg-purple-700 text-white' : 'hover:bg-purple-600 hover:text-white'}`}
-        >
-          {i}
-        </button>
-      );
-    }
-    
-    return pageNumbers;
-  })()}
+            // Adjust startPage if endPage is at the totalPages
+            if (endPage === totalPages) {
+              startPage = Math.max(1, totalPages - totalPagesToShow + 1);
+            }
 
-  <button 
-    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-    className="border border-purple-600 text-purple-600 px-3 py-1 rounded-r-lg hover:bg-purple-600 hover:text-white transition-all"
-    disabled={currentPage === totalPages}
-  >
-    <FaChevronRight />
-  </button>
-</div>
+            for (let i = startPage; i <= endPage; i++) {
+              pageNumbers.push(
+                <button
+                  key={i}
+                  onClick={() => setCurrentPage(i)}
+                  className={`border border-purple-600 text-purple-600 px-3 py-1 mx-1 rounded-lg transition-all ${currentPage === i ? 'bg-purple-700 text-white' : 'hover:bg-purple-600 hover:text-white'}`}
+                >
+                  {i}
+                </button>
+              );
+            }
 
+            return pageNumbers;
+          })()}
+
+          <button 
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            className="border border-purple-600 text-purple-600 px-3 py-1 rounded-r-lg hover:bg-purple-600 hover:text-white transition-all"
+            disabled={currentPage === totalPages}
+          >
+            <FaChevronRight />
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -37,10 +37,12 @@ export default function Navbar() {
 
         {/* Icons on Right */}
         <div className="flex items-center lg:w-1/4 md:w-1/4 w-1/2 justify-end space-x-4">
+          <Link to={'/login'}>
           <div className="flex items-center space-x-2">
             <FaUserSecret className="text-xl text-gray-700 cursor-pointer" />
             <span className="text-sm cursor-pointer">Sign In<br />Account</span>
           </div>
+          </Link>
           <FiHeart className="text-xl text-gray-700 cursor-pointer" />
           <FaShoppingCart className="text-xl text-gray-700 cursor-pointer" />
           {/* Menu icon for small devices */}
