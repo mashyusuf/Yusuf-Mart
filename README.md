@@ -1,6 +1,6 @@
 🛒 Yusuf Mart - Your Ultimate Grocery Store (Work in Progress)
-Live Site
-Figma Design: Click here
+Live Site : https://yusufmartclient.vercel.app/
+Figma Design: https://www.figma.com/design/fag5StrOlPikYrryop5qy3/75%2B-Ecommerce-Landing-Page-Templates-(Community)?t=fz9hQsAfWPn7Vq0H-0
 
 Welcome to Yusuf Mart, an all-in-one grocery store where you can find everything from daily essentials to medicine, baby products, and more! 🚀
 
