@@ -1,8 +1,53 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { authContext } from '../../providers/AuthProviders';
+import Swal from 'sweetalert2'
+import 'animate.css';
 export default function Registration() {
   const [role, setRole] = useState('customer');
+  const {createUser} = useContext(authContext);
+  const navigate = useNavigate()
+  const hangleRegistration = event => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+  
+    console.log(name, email, password);
+  
+    createUser(email, password)
+      .then(result => {
+        const loginUser = result.user;
+        console.log(loginUser);
+  
+        // Display SweetAlert2 notification
+        Swal.fire({
+          title: "Registration Successful!",
+          text: "Your account has been created successfully.",
+          icon: "success", // Done icon
+          showConfirmButton: false, // Remove the default "OK" button
+          timer: 1500, // Auto-close after 1.5 seconds
+          showClass: {
+            popup: `animate__animated animate__fadeInUp animate__faster`,
+          },
+          hideClass: {
+            popup: `animate__animated animate__fadeOutDown animate__faster`,
+          }
+        });
+  
+        // Navigate to home after SweetAlert closes
+        setTimeout(() => {
+          navigate('/');
+        }, 1500); // Match the timer with SweetAlert
+      })
+      .catch(error => {
+        console.error('Error during registration:', error);
+      });
+  };
+  
+  
+  
 
   return (
     <div className="flex justify-center items-center h-screen mt-10 mb-10 bg-gray-100">
@@ -14,12 +59,13 @@ export default function Registration() {
           There are many advantages to creating an account: the payment process is faster, shipment tracking is possible and much more.
         </p>
 
-        <form className="space-y-4">
+        <form onSubmit={hangleRegistration} className="space-y-4">
           <div>
             <label className="block mb-1 text-sm font-medium text-gray-700">Username *</label>
             <input
               type="text"
               required
+              name='name'
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
               placeholder="Username"
             />
@@ -30,6 +76,7 @@ export default function Registration() {
             <input
               type="email"
               required
+              name='email'
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
               placeholder="Email"
             />
@@ -40,6 +87,7 @@ export default function Registration() {
             <input
               type="password"
               required
+              name='password'
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
               placeholder="Password"
             />

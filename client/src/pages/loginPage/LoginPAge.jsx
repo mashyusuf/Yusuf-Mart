@@ -1,22 +1,57 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { authContext } from '../../providers/AuthProviders';
-
+import Swal from 'sweetalert2'
+import 'animate.css';
 export default function LoginPage() {
   const {signIn} = useContext(authContext);
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
   //handle Login -------
-  const handleLogin = event =>{
+  const handleLogin = event => {
     event.preventDefault();
-    const from = event.target;
-    const email = from.email.value;
-    const password = from.password.value;
-    console.log(email,password);
-    signIn(email,password)
-    .then(result =>{
-      const user = result.user;
-      console.log(user);
-    })
-  }
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+  
+    signIn(email, password)
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+  
+        // Show login success notification
+        Swal.fire({
+          title: "Login Successful!",
+          text: "Welcome back, you have logged in successfully.",
+          icon: "success", // Success icon
+          showConfirmButton: false, // Remove OK button
+          timer: 1500, // Auto-close after 1.5 seconds
+          showClass: {
+            popup: `animate__animated animate__fadeInUp animate__faster`,
+          },
+          hideClass: {
+            popup: `animate__animated animate__fadeOutDown animate__faster`,
+          }
+        });
+  
+        // Navigate to home after SweetAlert closes
+        setTimeout(() => {
+          navigate(from , {replace:true});
+        }, 1500); // Match the timer with SweetAlert
+      })
+      .catch(error => {
+        console.error('Error during login:', error);
+        // Show an error alert if login fails
+        Swal.fire({
+          title: "Login Failed!",
+          text: error.message,
+          icon: "error",
+        });
+      });
+  };
+  
   return (
     <div className="flex justify-center  items-center h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-4 bg-white rounded shadow-md">

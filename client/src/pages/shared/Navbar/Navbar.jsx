@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaHeart, FaUserAlt, FaShoppingCart, FaSearch, FaMapMarkerAlt, FaBars } from 'react-icons/fa';
-import logo from '../../../assets/logo.png'; // Use a fake logo image or replace with your own logo
+import logo from '../../../assets/logo.png'; 
 import { IoSearchOutline } from "react-icons/io5";
 import { FiHeart } from "react-icons/fi";
 import { FaUserSecret } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
+import { authContext } from '../../../providers/AuthProviders';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {user,logOut} = useContext(authContext)
+  const handleLogout =()=>{
+    logOut()
+    .then(()=>{})
+    .catch(error=>console.log(error))
+  }
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <div className="bg-white shadow-md">
+    <div className="bg-white shadow-md mb-4">
       {/* Main Section: Logo, Delivery, Search Bar, and Icons */}
       <div className="flex justify-between items-center px-4 py-4">
         {/* Logo and Delivery on Left */}
@@ -37,12 +44,26 @@ export default function Navbar() {
 
         {/* Icons on Right */}
         <div className="flex items-center lg:w-1/4 md:w-1/4 w-1/2 justify-end space-x-4">
-          <Link to={'/login'}>
-          <div className="flex items-center space-x-2">
-            <FaUserSecret className="text-xl hover:scale-105 hover:text-orange-600 text-gray-700 cursor-pointer" />
-            <span className="text-sm hover:scale-105 hover:text-orange-600 hover:font-bold cursor-pointer">Sign In<br />Account</span>
-          </div>
-          </Link>
+        
+        <div className="flex items-center space-x-2">
+  {
+    user ? (
+      <div onClick={handleLogout} className="flex items-center space-x-1 cursor-pointer">
+        <FaUserSecret className="text-xl text-gray-700 hover:scale-105 hover:text-orange-600" />
+        <span className="text-sm text-gray-700 hover:text-orange-600 hover:font-extrabold">Logout</span>
+      </div>
+    ) : (
+      <Link to="/login" className="flex items-center space-x-1 cursor-pointer">
+        <FaUserSecret className="text-xl text-gray-700 hover:scale-105 hover:text-orange-600" />
+        <span className="text-sm text-gray-700 hover:text-orange-600 hover:font-extrabold">
+          Sign In<br />Account
+        </span>
+      </Link>
+    )
+  }
+</div>
+
+         
           <FiHeart className="text-xl text-gray-700 cursor-pointer" />
           <FaShoppingCart className="text-xl text-gray-700 cursor-pointer" />
           {/* Menu icon for small devices */}

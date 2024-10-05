@@ -67,7 +67,7 @@ export default function Shop() {
       <div className="w-3/4 px-2">
         <div className="md:flex justify-between text-center md:ml-4 items-center gap-2">
           <div className="flex items-center gap-2">
-          <h1 className="text-xl font-bold text-black mb-1">Shop All Products</h1>
+          <h1 className="text-xl font-bold text-black mb-1">Shop All Products </h1>
           <p className="text-sm text-gray-500">
             Explore our wide range of categories and find the best deals!
           </p>
