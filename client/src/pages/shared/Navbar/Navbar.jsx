@@ -39,8 +39,8 @@ export default function Navbar() {
         <div className="flex items-center lg:w-1/4 md:w-1/4 w-1/2 justify-end space-x-4">
           <Link to={'/login'}>
           <div className="flex items-center space-x-2">
-            <FaUserSecret className="text-xl text-gray-700 cursor-pointer" />
-            <span className="text-sm cursor-pointer">Sign In<br />Account</span>
+            <FaUserSecret className="text-xl hover:scale-105 hover:text-orange-600 text-gray-700 cursor-pointer" />
+            <span className="text-sm hover:scale-105 hover:text-orange-600 hover:font-bold cursor-pointer">Sign In<br />Account</span>
           </div>
           </Link>
           <FiHeart className="text-xl text-gray-700 cursor-pointer" />
