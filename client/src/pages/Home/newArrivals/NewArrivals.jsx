@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { FaShoppingCart } from "react-icons/fa"; // Importing React Icons
+import { FaHandLizard, FaShoppingCart } from "react-icons/fa"; // Importing React Icons
 import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Arrow icons
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Loading from "../../../hooks/Loading";
@@ -23,6 +23,11 @@ export default function NewArrivals() {
       }
     },
   });
+
+  //---Handle Add TO Cart
+  const handleAddToCart =(cart)=>{
+    console.log(cart)
+  }
 
   const [showAll, setShowAll] = useState(false); // State to toggle view
 
@@ -105,7 +110,7 @@ export default function NewArrivals() {
                 </div>
                 <div className="card-actions">
                   {/* Add to Cart Button with Icon */}
-                  <button className="w-full border border-purple-600 text-purple-600 py-2 rounded-full hover:bg-purple-700 hover:text-white transition duration-300 flex items-center justify-center">
+                  <button onClick={()=> handleAddToCart(product)} className="w-full border border-purple-600 text-purple-600 py-2 rounded-full hover:bg-purple-700 hover:text-white transition duration-300 flex items-center justify-center">
                     <FaShoppingCart className="mr-2" />{" "}
                     {/* Add margin for spacing */}
                     <span>Add to Cart</span>

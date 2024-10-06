@@ -41,52 +41,81 @@ async function run() {
     const reviewsCollection = client.db("Yusuf-Mart").collection("reviews");
 
     // Fetch filtered products based on query parameters
-    app.get("/allData", async (req, res) => {
-      const { category, minPrice, maxPrice, specialOffer, sortBy, page = 1, limit = 12 } = req.query;
+app.get("/allData", async (req, res) => {
+  const {
+    category,
+    minPrice,
+    maxPrice,
+    specialOffer,
+    sortBy,
+    page = 1,
+    limit = 12,
+    search,
+  } = req.query;
+
+  let filter = {};
+  const options = {
+    skip: (page - 1) * limit,
+    limit: parseInt(limit),
+  };
+
+  // If category is provided, add it to the filter
+  if (category) {
+    filter.category = category;
+  }
+
+  // Add price filtering to the query
+  if (minPrice || maxPrice) {
+    filter.price = {};
+    if (minPrice) {
+      filter.price.$gte = parseFloat(minPrice);
+    }
+    if (maxPrice) {
+      filter.price.$lte = parseFloat(maxPrice);
+    }
+  }
+
+  // Add special offer filtering
+  if (specialOffer) {
+    filter.special = specialOffer;
+  }
+
+  if (search) {
+    // Search by name or description
+    filter.$or = [
+      { name: { $regex: search, $options: "i" } },  // Case-insensitive search
+      { description: { $regex: search, $options: "i" } }
+    ];
+  }
+  
+
+  try {
+    const sortOption =
+      sortBy === "highToLow"
+        ? { price: -1 }
+        : sortBy === "lowToHigh"
+        ? { price: 1 }
+        : {};
+
+    const totalItems = await allCategoryCollection.countDocuments(filter);
+    const totalPages = Math.ceil(totalItems / limit);
+
+    const products = await allCategoryCollection
+      .find(filter)
+      .sort(sortOption)
+      .skip(options.skip)
+      .limit(options.limit)
+      .toArray();
+
+    res.send({ products, totalPages, currentPage: parseInt(page) });
+  } catch (error) {
+    res.status(500).send({ message: "Error fetching data", error });
+  }
+});
+
     
-      let filter = {};
-      const options = {
-        skip: (page - 1) * limit,
-        limit: parseInt(limit),
-      };
     
-      // If category is provided, add it to the filter
-      if (category) {
-        filter.category = category;
-      }
-    
-      // Add price filtering to the query
-      if (minPrice || maxPrice) {
-        filter.price = {};
-        if (minPrice) {
-          filter.price.$gte = parseFloat(minPrice);
-        }
-        if (maxPrice) {
-          filter.price.$lte = parseFloat(maxPrice);
-        }
-      }
-    
-      // Add special offer filtering
-      if (specialOffer) {
-        filter.special = specialOffer;
-      }
-    
-      try {
-        const sortOption = sortBy === 'highToLow' ? { price: -1 } : sortBy === 'lowToHigh' ? { price: 1 } : {};
-        
-        const totalItems = await allCategoryCollection.countDocuments(filter);
-        const totalPages = Math.ceil(totalItems / limit);
-    
-        const products = await allCategoryCollection.find(filter).sort(sortOption).skip(options.skip).limit(options.limit).toArray();
-        
-        res.send({ products, totalPages, currentPage: parseInt(page) });
-      } catch (error) {
-        res.status(500).send({ message: "Error fetching data", error });
-      }
-    });
-    
-    
-    
+    //category data from db base fro home ---
     app.get("/category/:category", async (req, res) => {
       const { category } = req.params;
       const query = category ? { category } : {}; // If category is provided, filter by it

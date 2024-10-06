@@ -7,7 +7,7 @@ import Filter from "../Filter/Filter";
 import { BsShop } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Importing icons for pagination
 import { GoArrowLeft } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [minPrice, setMinPrice] = useState(0); 
@@ -15,21 +15,25 @@ export default function Shop() {
   const [specialOffer, setSpecialOffer] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchParams] = useSearchParams();
+  const searchTerm = searchParams.get('search') || '';
   const axiosPublic = useAxiosPublic();
 
   const { data: { products = [], totalPages = 1 } = {}, isError, isLoading } = useQuery({
-    queryKey: ["allProducts", selectedCategory, minPrice, maxPrice, specialOffer, sortBy, currentPage],
+    queryKey: ["allProducts", selectedCategory, minPrice, maxPrice, specialOffer, sortBy, searchTerm, currentPage],
     queryFn: async () => {
       try {
         const res = await axiosPublic(
-          `/allData?category=${selectedCategory}&minPrice=${minPrice}&maxPrice=${maxPrice}&specialOffer=${specialOffer}&sortBy=${sortBy}&page=${currentPage}&limit=12`
+          `/allData?category=${selectedCategory}&minPrice=${minPrice}&maxPrice=${maxPrice}&specialOffer=${specialOffer}&sortBy=${sortBy}&search=${searchTerm}&page=${currentPage}&limit=12`
         );
-        return res.data; // This now returns products and totalPages
+        return res.data;
       } catch (err) {
         console.log("Error fetching all data", err);
       }
     },
   });
+  
+  // Rest of the Shop component code
 
   const handleFilter = () => {};
   
@@ -185,6 +189,15 @@ export default function Shop() {
               </div>
             );
           })}
+        </div>
+        {/* Product Display */}
+        <div className="grid grid-cols-2 px-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 mt-6">
+          {products.map((product) => (
+            // Map over your product display logic
+            <div key={product._id} className="card bg-white shadow-xl rounded-lg overflow-hidden relative">
+              {/* Product card content */}
+            </div>
+          ))}
         </div>
 
       {/* Pagination */}
