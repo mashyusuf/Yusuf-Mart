@@ -6,12 +6,14 @@ import { FiHeart } from "react-icons/fi";
 import { FaUserSecret } from "react-icons/fa6";
 import { Link, useNavigate } from 'react-router-dom';
 import { authContext } from '../../../providers/AuthProviders';
+import useAddToCart from '../../../hooks/useAddToCart';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {user, logOut} = useContext(authContext);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const [cartItem] = useAddToCart();
 
   const handleLogout = () => {
     logOut()
@@ -93,7 +95,7 @@ export default function Navbar() {
     <button className="relative">
       <FaShoppingCart className="text-2xl hover:text-green-500 text-gray-700 cursor-pointer" />
       <div className="absolute -top-1 -right-2 bg-purple-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-        0
+       {cartItem.length}
       </div>
     </button>
   </Link>

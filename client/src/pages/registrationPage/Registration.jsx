@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2'
 import 'animate.css';
+import useAuth from '../../hooks/useAuth';
 export default function Registration() {
   const [role, setRole] = useState('customer');
-  const {createUser} = useContext(authContext);
+  const {createUser} = useAuth();
   const navigate = useNavigate()
   const hangleRegistration = event => {
     event.preventDefault();

@@ -23,21 +23,12 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const allCategoryCollection = client.db("Yusuf-Mart").collection("allData");
-    const thisWeakProductsCollection = client
-      .db("Yusuf-Mart")
-      .collection("thisWeak");
-    const newArrivalsCollection = client
-      .db("Yusuf-Mart")
-      .collection("new Arrivals");
-    const discountProductsCollection = client
-      .db("Yusuf-Mart")
-      .collection("FeatureProducts");
-    const superOfferProductsCollection = client
-      .db("Yusuf-Mart")
-      .collection("super");
-    const bestSellesCollection = client
-      .db("Yusuf-Mart")
-      .collection("bestSelles");
+    const thisWeakProductsCollection = client.db("Yusuf-Mart").collection("thisWeak");
+    const newArrivalsCollection = client.db("Yusuf-Mart").collection("new Arrivals");
+    const discountProductsCollection = client.db("Yusuf-Mart").collection("FeatureProducts");
+    const superOfferProductsCollection = client.db("Yusuf-Mart").collection("super");
+    const bestSellesCollection = client.db("Yusuf-Mart").collection("bestSelles");
+    const addToCartCollection = client.db("Yusuf-Mart").collection("carts");
     const reviewsCollection = client.db("Yusuf-Mart").collection("reviews");
 
     // Fetch filtered products based on query parameters
@@ -153,6 +144,27 @@ app.get("/allData", async (req, res) => {
       const result = await reviewsCollection.find().toArray();
       res.send(result);
     });
+
+    //Post , delete, emailGet, put, patch era start Now -----------
+
+    //Add To cart Post In Database----------------
+    app.post('/addToCart',async(req,res)=>{
+      const CartItem = req.body;
+      const result = await addToCartCollection.insertOne(CartItem);
+      res.send(result)
+    })
+
+    //Add To Cart Data For User Get-----
+    app.get('/cartData',async(req,res)=>{
+      const email = req.query.email;
+      const query = {email:email};
+      const result = await addToCartCollection.find(query).toArray();
+      res.send(result);
+    })
+
+
+
+
   } finally {
     // Ensures that the client will close when you finish/error
     //await client.close();

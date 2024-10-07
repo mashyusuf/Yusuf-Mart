@@ -3,8 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { authContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2'
 import 'animate.css';
+import useAuth from '../../hooks/useAuth';
 export default function LoginPage() {
-  const {signIn} = useContext(authContext);
+  const {signIn} = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from?.pathname || '/'
