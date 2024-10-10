@@ -180,12 +180,25 @@ app.get("/allData", async (req, res) => {
     //Now Shop Now Cart Server Code Start Now -------
     //Get All Data from data base for One Data id-----------
 
-    app.get('/allProducts/:id',async(req,res)=>{
-      const id = req.params.id;
-      const query = {_id:new ObjectId(id)}
-      const result = await allCategoryCollection.findOne(query)
-      res.send(result)
-    })
+   // Backend code to fetch related products by category
+app.get('/allProducts/:id', async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  
+  // Find the current product
+  const product = await allCategoryCollection.findOne(query);
+
+  if (product) {
+    // Fetch other products from the same category
+    const relatedProductsQuery = { category: product.category, _id: { $ne: new ObjectId(id) } };
+    const relatedProducts = await allCategoryCollection.find(relatedProductsQuery).toArray();
+    
+    // Send both the current product and the related products
+    res.send({ product, relatedProducts });
+  } else {
+    res.status(404).send({ message: "Product not found" });
+  }
+});
 
 
 
