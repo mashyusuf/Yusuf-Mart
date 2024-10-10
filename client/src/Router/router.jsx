@@ -5,6 +5,7 @@ import Shop from "../Componenets/shop/Shop";
 import LoginPAge from "../pages/loginPage/LoginPAge";
 import Registration from "../pages/registrationPage/Registration";
 import PrivateRouter from "./PrivateRouter";
+import ShopNow from "../Componenets/shopNow/ShopNow";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         path: "/shop",
         element: <Shop />,
+      },
+      {
+        path: "/shopNow/:id",
+        element: <ShopNow />,
       },
     ],
   },

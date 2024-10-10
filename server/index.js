@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ziugtg4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -170,12 +170,21 @@ app.get("/allData", async (req, res) => {
       res.send(result)
     })
     //add to heart get the data for user -----
-    //Add To Cart Data For User Get-----
     app.get('/heartData',async(req,res)=>{
       const email = req.query.email;
       const query = {email:email};
       const result = await addToHeartCollection.find(query).toArray();
       res.send(result);
+    })
+
+    //Now Shop Now Cart Server Code Start Now -------
+    //Get All Data from data base for One Data id-----------
+
+    app.get('/allProducts/:id',async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id:new ObjectId(id)}
+      const result = await allCategoryCollection.findOne(query)
+      res.send(result)
     })
 
 

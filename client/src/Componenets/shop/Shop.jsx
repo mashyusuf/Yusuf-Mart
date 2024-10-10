@@ -34,9 +34,6 @@ export default function Shop() {
   });
   
   // Rest of the Shop component code
-
-  const handleFilter = () => {};
-  
   const applyFilter = () => {
     setMinPrice(minPrice);
     setMaxPrice(maxPrice);
@@ -180,10 +177,12 @@ export default function Shop() {
                   </div>
 
                   <div className="card-actions">
+                  <Link className="w-full" to={`/shopNow/${product._id}`}>
                     <button className="w-full flex items-center justify-center border border-green-600 text-green-600 py-2 rounded-full hover:bg-green-700 hover:text-white transition-all">
                       <BsShop className="inline mr-1" />
                       Shop Now
                     </button>
+                    </Link>
                   </div>
                 </div>
               </div>
