@@ -29,6 +29,7 @@ async function run() {
     const superOfferProductsCollection = client.db("Yusuf-Mart").collection("super");
     const bestSellesCollection = client.db("Yusuf-Mart").collection("bestSelles");
     const addToCartCollection = client.db("Yusuf-Mart").collection("carts");
+    const addToHeartCollection = client.db("Yusuf-Mart").collection("heart");
     const reviewsCollection = client.db("Yusuf-Mart").collection("reviews");
 
     // Fetch filtered products based on query parameters
@@ -162,6 +163,20 @@ app.get("/allData", async (req, res) => {
       res.send(result);
     })
 
+    //-Add To Product  into Heart Or Bookmark -----
+    app.post('/addToHeart',async(req,res)=>{
+      const heartItem = req.body;
+      const result = await addToHeartCollection.insertOne(heartItem);
+      res.send(result)
+    })
+    //add to heart get the data for user -----
+    //Add To Cart Data For User Get-----
+    app.get('/heartData',async(req,res)=>{
+      const email = req.query.email;
+      const query = {email:email};
+      const result = await addToHeartCollection.find(query).toArray();
+      res.send(result);
+    })
 
 
 

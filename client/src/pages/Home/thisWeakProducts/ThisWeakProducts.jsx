@@ -62,7 +62,7 @@ export default function ThisWeekProducts() {
     }
 
     return (
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
             <div>
                 <h1 className="text-xl  font-bold mb-6 text-purple-600">
                     This Week's Special Products

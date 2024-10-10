@@ -151,6 +151,7 @@ export default function Home() {
           })}
         </div>
       <div>
+      <div className="container mx-auto">
       <ThisWeekProducts />
       <NewArrivals />
       <DiscountProducts />
@@ -159,6 +160,7 @@ export default function Home() {
       </div>
       <DiscountImg />
       <Reviews />
+      </div>
     </div>
   );
 }

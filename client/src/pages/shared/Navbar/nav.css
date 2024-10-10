@@ -1,0 +1,23 @@
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1); /* Slightly larger */
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Heart and Cart animation */
+  .icon-pulse {
+    animation: pulse 1.3s infinite ease-in-out; /* Infinite pulsing */
+  }
+  .animate-writer {
+    display: inline-block;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  

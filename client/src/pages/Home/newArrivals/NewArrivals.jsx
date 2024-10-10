@@ -104,7 +104,7 @@ export default function NewArrivals() {
   const productsToShow = showAll ? newProducts : newProducts.slice(0, 5);
 
   return (
-    <div className="container mx-auto mt-5 mb-5">
+    <div className=" mt-5 mb-5">
       <div className="md:flex text-center md:ml-4 items-center gap-2">
         <h1 className="text-xl font-bold text-black mb-1">New Arrivals</h1>
         <p className="text-sm text-gray-500">

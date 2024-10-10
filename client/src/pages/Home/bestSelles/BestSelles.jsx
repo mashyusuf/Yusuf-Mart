@@ -4,9 +4,20 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import Loading from '../../../hooks/Loading';
 import Error from '../../../hooks/Error';
+import useAuth from '../../../hooks/useAuth';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import useAddToCart from '../../../hooks/useAddToCart';
+import Swal from 'sweetalert2';
+import useAddToHeart from '../../../hooks/useAddToHeart';
 
 export default function BestSelles() {
   const axiosPublic = useAxiosPublic();
+  const {user}= useAuth();
+  const axiosSecure = useAxiosSecure();
+  const [, refetchCart] = useAddToCart();
+  const [, refetchHeart] = useAddToHeart();
+  
+
   const { data: bestSelles = [], isError, isLoading } = useQuery({
     queryKey: ['bestSelles'],
     queryFn: async () => {
@@ -18,6 +29,116 @@ export default function BestSelles() {
       }
     },
   });
+  //---Handle Add TO Cart
+  const handleAddToCart =(cart)=>{
+    if(user && user.email){
+      //We Add To cart In Database----
+      const cartItem ={
+        email:user.email,
+        cart
+      }
+      axiosSecure.post(`/addToCart`,cartItem)
+      .then(res =>{
+        if(res.data.insertedId){
+          Swal.fire({
+            position: "center",
+            icon: "success", // Keeping success icon for visual feedback
+            title: `${cart.name} Added To The Cart Successfully! 🛒`, // Added emoji for more visual appeal
+            text: "You can continue shopping or proceed to checkout.",
+            imageUrl: `${cart.image}`, // Adding the product image
+            imageWidth: 100, // Adjust the image size as needed
+            imageAlt: `${cart.name}`, // Alt text for the product image
+            showConfirmButton: false,
+            timer: 2000 // Increased timer for more visibility
+          });
+          //Refetch The Cart---
+          refetchCart()
+        }
+      })
+    }
+    else{
+      Swal.fire({
+        title: "⚠️ Hey! Why are you not logged in?",
+        text: "You need to be logged in to continue. Please log in to proceed.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Go to Login", 
+        cancelButtonText: "Cancel" 
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Redirecting...",
+            text: "Taking you to the login page now.",
+            icon: "info",
+            showConfirmButton: false, // Hides confirm button
+            timer: 1500, // Adds a timer to close the alert automatically
+            willClose: () => {
+              // Redirect to login page after the alert closes
+              navigate('/login', { state: { from: location } });
+            }
+          });
+        }
+      });      
+      
+    }
+  }
+  //---Handle Add TO Cart
+  const handleAddToHeart =(cart)=>{
+    if(user && user.email){
+      //We Add To cart In Database----
+      const cartItem ={
+        email:user.email,
+        cart
+      }
+      axiosSecure.post(`/addToHeart`,cartItem)
+      .then(res =>{
+        if(res.data.insertedId){
+          Swal.fire({
+            position: "center",
+            icon: "success", // Keeping success icon for visual feedback
+            title: `${cart.name} Added To The Cart Successfully! 🛒`, // Added emoji for more visual appeal
+            text: "You can continue shopping or proceed to checkout.",
+            imageUrl: `${cart.image}`, // Adding the product image
+            imageWidth: 100, // Adjust the image size as needed
+            imageAlt: `${cart.name}`, // Alt text for the product image
+            showConfirmButton: false,
+            timer: 2000 // Increased timer for more visibility
+          });
+          //Refetch The Cart---
+          refetchHeart()
+        }
+      })
+    }
+    else{
+      Swal.fire({
+        title: "⚠️ Hey! Why are you not logged in?",
+        text: "You need to be logged in to continue. Please log in to proceed.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Go to Login", 
+        cancelButtonText: "Cancel" 
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Redirecting...",
+            text: "Taking you to the login page now.",
+            icon: "info",
+            showConfirmButton: false, // Hides confirm button
+            timer: 1500, // Adds a timer to close the alert automatically
+            willClose: () => {
+              // Redirect to login page after the alert closes
+              navigate('/login', { state: { from: location } });
+            }
+          });
+        }
+      });      
+      
+    }
+  }
 
   if (isLoading) {
     return <Loading />;
@@ -42,7 +163,7 @@ export default function BestSelles() {
               <h1 className="text-white text-center bg-red-600 px-2 py-2 rounded-full">
                 {product.discount_percentage}%
               </h1>
-              <button className="flex items-center text-black hover:text-red-500">
+              <button onClick={()=> handleAddToHeart(product)} className="flex items-center text-black hover:text-red-500">
                 <AiOutlineHeart className="mr-2 text-2xl" />
               </button>
             </div>
@@ -112,7 +233,7 @@ export default function BestSelles() {
                 <AiOutlineShoppingCart className="mr-2" /> Shop Now
               </button>
             ) : (
-              <button className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full hover:bg-purple-700 hover:text-white">
+              <button onClick={()=> handleAddToCart(product)} className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full hover:bg-purple-700 hover:text-white">
                 <AiOutlineShoppingCart className="mr-2" /> Add to Cart
               </button>
             )}
