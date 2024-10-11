@@ -142,20 +142,20 @@ export default function Navbar() {
 
           {/* Cart Icon */}
           <div className="relative">
-            <button
+            <Link to={'/myCart'}><button
               className={`relative ${cartItem.length > 0 ? "icon-pulse" : ""}`}
             >
               <FaShoppingCart
                 className={`text-2xl cursor-pointer ${
                   cartItem.length > 0
-                    ? "text-gray-700 hover:text-green-600"
+                    ? "text-cyan-500 hover:text-green-600"
                     : "text-gray-700 hover:text-green-500"
                 } transition-all duration-500`}
               />
               <div className="absolute -top-1 -right-2 bg-purple-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 {cartItem.length}
               </div>
-            </button>
+            </button></Link>
           </div>
           {/* Mobile Menu */}
 

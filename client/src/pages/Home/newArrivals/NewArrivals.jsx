@@ -1,23 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { FaHandLizard, FaShoppingCart } from "react-icons/fa"; // Importing React Icons
+import {  FaShoppingCart } from "react-icons/fa"; // Importing React Icons
 import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // Arrow icons
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Loading from "../../../hooks/Loading";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Error from "../../../hooks/Error";
-import useAuth from "../../../hooks/useAuth";
-import Swal from 'sweetalert2'
-import axios from "axios";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import useAddToCart from "../../../hooks/useAddToCart";
+
+
+import useClickToCart from "../../../hooks/useClickToCart";
 export default function NewArrivals() {
-  const {user} = useAuth();
-  const navigate = useNavigate();
   const location = useLocation();
   const axiosPublic = useAxiosPublic();
-  const axiosSecure = useAxiosSecure();
-  const [,refetch] = useAddToCart()
+  const [handleAddToCart] = useClickToCart();
   const {
     data: newProducts = [],
     isLoading,
@@ -35,7 +30,7 @@ export default function NewArrivals() {
   });
 
   //---Handle Add TO Cart
-  const handleAddToCart =(cart)=>{
+  {/* const handleAddToCart =(cart)=>{
     if(user && user.email){
       //We Add To cart In Database----
       const cartItem ={
@@ -88,7 +83,7 @@ export default function NewArrivals() {
       });      
       
     }
-  }
+  }*/}
 
   const [showAll, setShowAll] = useState(false); // State to toggle view
 

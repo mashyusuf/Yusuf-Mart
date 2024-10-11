@@ -8,6 +8,7 @@ import { BsShop } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Importing icons for pagination
 import { GoArrowLeft } from "react-icons/go";
 import { Link, useSearchParams } from "react-router-dom";
+import Pages from "../../pages/shared/Pages/Pages";
 export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [minPrice, setMinPrice] = useState(0); 
@@ -53,6 +54,7 @@ export default function Shop() {
   return (
     <div className="container mx-auto mt-5 mb-5 flex ">
      
+     
       <Filter
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
@@ -65,6 +67,7 @@ export default function Shop() {
         setSpecialOffer={setSpecialOffer}
         setSortOrder={setSortBy}
       />
+     
       <div className="w-3/4 px-2">
         <div className="md:flex justify-between text-center md:ml-4 items-center gap-2">
           <div className="flex items-center gap-2">

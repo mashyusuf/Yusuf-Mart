@@ -6,6 +6,7 @@ import LoginPAge from "../pages/loginPage/LoginPAge";
 import Registration from "../pages/registrationPage/Registration";
 import PrivateRouter from "./PrivateRouter";
 import ShopNow from "../Componenets/shopNow/ShopNow";
+import MyAddToCart from "../Componenets/MyCart/MyAddToCart";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "/shopNow/:id",
         element: <ShopNow />,
+      },
+      {
+        path: "/myCart",
+        element: <MyAddToCart />,
       },
     ],
   },

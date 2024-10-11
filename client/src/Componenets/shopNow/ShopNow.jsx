@@ -5,8 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../hooks/Loading";
 import Error from "../../hooks/Error";
 import { LiaShoppingBasketSolid } from "react-icons/lia";
-import { GiGlassHeart } from "react-icons/gi";
-import { PiShoppingBagFill } from "react-icons/pi";
+
 import {
   FaStar,
   FaHeart,
@@ -15,16 +14,22 @@ import {
   FaMinus,
   FaPlus,
   FaWhatsapp,
-  FaCreditCard,
 } from "react-icons/fa";
 import { LiaOpencart } from "react-icons/lia";
-import { GiSlashedShield } from "react-icons/gi";
+import Pages from "../../pages/shared/Pages/Pages";
+import useClickToCart from "../../hooks/useClickToCart";
+import useClickToHeart from "../../hooks/useClickToHeart";
+import RelatedProduct from "./relatedProduct";
+import useAuth from "../../hooks/useAuth";
+import PaymentAndWarannty from "../staticTexts/PaymentAndWarannty";
 export default function ShopNow() {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState("description"); // For tab switching
-
+  const [activeTab, setActiveTab] = useState("description");
+  const [handleAddToCart] = useClickToCart();
+  const [handleAddToHeart] = useClickToHeart();
+  const {user} = useAuth()
   const {
     data: { product = {}, relatedProducts = [] } = {}, // Fetch both product and related products
     isError,
@@ -37,7 +42,6 @@ export default function ShopNow() {
     },
   });
 
-
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
@@ -47,6 +51,7 @@ export default function ShopNow() {
 
   return (
     <div className="container mx-auto p-6">
+      <Pages />
       {/* Main Section */}
       <div className="flex flex-col items-center lg:flex-row gap-8">
         {/* Left Side: Product Image */}
@@ -101,17 +106,16 @@ export default function ShopNow() {
           </div>
           {/* Order on WhatsApp Section */}
           <div className="mt-2 mb-2 flex justify-center md:justify-start">
-            <button className="btn text-white hover:bg-green-700  flex items-center justify-center space-x-1 bg-green-600 text-lg">
+            <button className="btn text-white hover:bg-green-700 flex items-center justify-center space-x-1 bg-green-600 text-lg">
               <FaWhatsapp className="text-2xl" />
-              <p>
-                Order on WhatsApp
-                <a
-                  href="https://wa.me/01729804092"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline"
-                ></a>
-              </p>
+              <a
+                href="https://wa.me/01729804092"
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" flex items-center space-x-1"
+              >
+                <p>Order on WhatsApp</p>
+              </a>
             </button>
           </div>
 
@@ -126,7 +130,10 @@ export default function ShopNow() {
                 <FaPlus />
               </button>
             </div>
-            <button className="bg-green-600 hover:bg-green-700 flex items-center text-white px-6 py-2 rounded-md">
+            <button
+              onClick={() => handleAddToCart(product)}
+              className="bg-green-600 hover:bg-green-700 flex items-center text-white px-6 py-2 rounded-md"
+            >
               <LiaShoppingBasketSolid className="text-xl mr-2" /> Add to Cart
             </button>
             <button className="bg-orange-500 hover:bg-orange-700 flex items-center text-white px-6 py-2 rounded-md">
@@ -135,7 +142,10 @@ export default function ShopNow() {
           </div>
           {/* Wishlist, Share, Compare */}
           <div className="flex justify-center lg:justify-start space-x-6 mt-6 text-gray-500">
-            <button className="flex items-center space-x-2 hover:text-red-500">
+            <button
+              onClick={() => handleAddToHeart(product)}
+              className="flex items-center space-x-2 hover:text-red-500"
+            >
               <FaHeart /> <span>Add to Wishlist</span>
             </button>
             <button className="flex items-center space-x-2 hover:text-blue-500">
@@ -146,39 +156,7 @@ export default function ShopNow() {
             </button>
           </div>
           {/* Payment Section */}
-          <div className="mt-8 text-center lg:text-left">
-            <div className="flex flex-col items-center lg:items-start">
-              <h3 className="text-base  flex items-center font-bold mb-4">
-                <FaCreditCard className="text-green-600 mr-2" /> Payment
-              </h3>
-
-              <div className="flex flex-col space-y-2">
-                <span className="flex items-center">
-                  <span className="mr-2">•</span> Payment upon receipt of goods
-                </span>
-                <span className="flex items-center">
-                  <span className="mr-2">•</span> Payment by card in the
-                  department
-                </span>
-                <span className="flex items-center">
-                  <span className="mr-2">•</span> Google Pay
-                </span>
-                <span className="flex items-center">
-                  <span className="mr-2">•</span> Online Card - 5% discount in
-                  case of payment
-                </span>
-              </div>
-
-              <h3 className="text-base flex items-center font-bold mt-4 mb-2">
-                <GiSlashedShield className="text-gray-700 mr-2" />
-                Warranty
-              </h3>
-              <p className="text-sm text-gray-600 text-center lg:text-left">
-                The Consumer Protection Act does not provide for the return of
-                this product of proper quality.
-              </p>
-            </div>
-          </div>
+          <PaymentAndWarannty />
         </div>
       </div>
 
@@ -235,60 +213,11 @@ export default function ShopNow() {
           )}
         </div>
       )}
-       <div className="mt-8">
-  <h2 className="text-2xl font-bold">Related Products</h2>
-  <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
-    {relatedProducts.map((relatedProduct) => (
-      <div key={relatedProduct._id} className="border p-4 rounded-lg relative shadow-lg">
-        {/* Discount badge on the right */}
-        <span className="absolute top-2 right-2 rounded-full bg-red-500 text-white text-xs font-bold px-2 py-1 ">
-          {relatedProduct.discount ? `${relatedProduct.discount}% OFF` : ''}
-        </span>
-
-        {/* Heart Icon on the left */}
-        <span className="absolute  top-2 left-2 text-gray-500 hover:text-red-500 cursor-pointer">
-          <GiGlassHeart  size={30} />
-        </span>
-
-        {/* Product Image */}
-        <img
-          src={relatedProduct.image || relatedProduct.imageUrl}
-          alt={relatedProduct.name}
-          className="w-full h-48 object-cover rounded"
-        />
-
-        {/* Product Name */}
-        <h3 className="text-lg font-bold mt-2">
-          {relatedProduct.name}
-        </h3>
-
-        {/* Reviews */}
-        <div className="flex items-center mt-2 text-yellow-500">
-          <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaStar />
-          <span className="ml-2 text-gray-500">{relatedProduct.rating}</span> {/* Customize based on product data */}
-        </div>
-
-        {/* Price and Discount */}
-        <div className="flex items-center gap-2 mt-2">
-          <p className="text-green-600 font-bold">${relatedProduct.price}</p>
-          {relatedProduct.discount && (
-            <p className="line-through text-gray-500">
-              ${(relatedProduct.price / (1 - relatedProduct.discount / 100)).toFixed(2)}
-            </p>
-          )}
-        </div>
-
-        {/* View Product Button */}
-        <Link to={`/shopNow/${relatedProduct._id}`}>
-  <button className="border-2 border-green-600 flex items-center justify-center hover:bg-green-600 hover:text-white text-green-600 px-4 py-2 rounded-md mt-4 w-full">
-    <PiShoppingBagFill className="mr-2" /> Shop Now
-  </button>
-</Link>
-
-      </div>
-    ))}
-  </div>
-</div>
+      <RelatedProduct 
+  relatedProducts={relatedProducts} 
+  handleAddToHeart={handleAddToHeart} 
+  user={user} 
+/>
     </div>
   );
 }
