@@ -13,5 +13,5 @@ export default function useAddToCart() {
         return res.data;
     }
   })
-  return [cartItem,refetch]
+  return [cartItem,refetch,isLoading.isError]
 }

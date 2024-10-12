@@ -7,6 +7,7 @@ import {
   FaUserSecret,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import { HiOutlineShoppingCart } from "react-icons/hi";
 import logo from "../../../assets/logo.png";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiHeart } from "react-icons/fi";
@@ -145,10 +146,10 @@ export default function Navbar() {
             <Link to={'/myCart'}><button
               className={`relative ${cartItem.length > 0 ? "icon-pulse" : ""}`}
             >
-              <FaShoppingCart
+              <HiOutlineShoppingCart
                 className={`text-2xl cursor-pointer ${
                   cartItem.length > 0
-                    ? "text-cyan-500 hover:text-green-600"
+                    ? "text-green-700 hover:text-cyan-600"
                     : "text-gray-700 hover:text-green-500"
                 } transition-all duration-500`}
               />
