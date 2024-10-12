@@ -7,6 +7,7 @@ import Registration from "../pages/registrationPage/Registration";
 import PrivateRouter from "./PrivateRouter";
 import ShopNow from "../Componenets/shopNow/ShopNow";
 import MyAddToCart from "../Componenets/MyCart/MyAddToCart";
+import MyHeartList from "../Componenets/myHeartList/MyHeartList";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: "/myCart",
         element: <MyAddToCart />,
+      },
+      {
+        path: "/myHeart",
+        element: <MyHeartList />,
       },
     ],
   },

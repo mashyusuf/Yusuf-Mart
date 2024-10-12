@@ -125,7 +125,7 @@ export default function Navbar() {
 
           {/* Heart Icon */}
           <div className="relative">
-            <button
+            <Link to={'/myheart'}><button
               className={`relative ${heartItem.length > 0 ? "icon-pulse" : ""}`}
             >
               <GiTechnoHeart
@@ -138,7 +138,7 @@ export default function Navbar() {
               <div className="absolute -top-1 -right-2 bg-purple-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 {heartItem.length}
               </div>
-            </button>
+            </button></Link>
           </div>
 
           {/* Cart Icon */}
