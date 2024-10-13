@@ -10,8 +10,10 @@ import { LiaVaadin } from "react-icons/lia";
 import { GiCavalry } from "react-icons/gi"; 
 import { MdOutlineDone } from "react-icons/md"; 
 import { PiRocketLaunchLight } from "react-icons/pi"
+import useHandleAddToHeartDelete from '../../hooks/useHandleAddToHeartDelete';
 export default function MyHeartList() {
 const [heartItem] = useAddToHeart();
+const [handleDelete] = useHandleAddToHeartDelete();
 const { user } = useAuth();
   
 
@@ -63,7 +65,7 @@ const { user } = useAuth();
     {heartItem.map((item, index) => (
       <div key={index} className="border p-3 rounded shadow relative">
         {/* Delete Icon */}
-        <button className="absolute top-2 right-2 text-red-600 hover:text-red-800">
+        <button onClick={()=>handleDelete(item._id)} className="absolute top-2 right-2 text-red-600 hover:text-red-800">
           <GiCrossMark className="text-xl" />
         </button>
 

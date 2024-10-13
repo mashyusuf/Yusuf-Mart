@@ -199,7 +199,25 @@ app.get('/allProducts/:id', async (req, res) => {
     res.status(404).send({ message: "Product not found" });
   }
 });
+ 
 
+
+//-----Add To Cart And Add to Heart Delete Aura Start Now --------
+
+//Add To Cart Delete----------
+app.delete('/addTocartDelete/:id' ,async (req,res)=>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result =await addToCartCollection.deleteOne(query);
+  res.send(result)
+})
+//Add To Heart Delete----------
+app.delete('/addToHeartDelete/:id' ,async (req,res)=>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result =await addToHeartCollection.deleteOne(query);
+  res.send(result)
+})
 
 
   } finally {

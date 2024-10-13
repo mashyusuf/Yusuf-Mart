@@ -22,12 +22,13 @@ import useClickToHeart from "../../hooks/useClickToHeart";
 import RelatedProduct from "./relatedProduct";
 import useAuth from "../../hooks/useAuth";
 import PaymentAndWarannty from "../staticTexts/PaymentAndWarannty";
+import useIncreseAndDesAddToCart from "../../hooks/useIncreseAndDesAddToCart";
 export default function ShopNow() {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
-  const [handleAddToCart] = useClickToCart();
+  const [handleAddToCart2] = useIncreseAndDesAddToCart();
   const [handleAddToHeart] = useClickToHeart();
   const {user} = useAuth()
   const {
@@ -95,15 +96,20 @@ export default function ShopNow() {
 
           {/* Price Section */}
           <div className="flex items-center justify-center lg:justify-start space-x-4">
-            <span className="text-3xl font-bold text-green-600">
-              ${product.price}
-            </span>
-            {product.discount && (
-              <span className="text-2xl line-through text-black">
-                ${product.discount}
-              </span>
-            )}
-          </div>
+  <span className="text-3xl font-bold text-green-600">
+    ${product.price}
+  </span>
+  {product.discount ? (
+    <>
+      <span className="text-2xl line-through text-black">
+        ${product.discount}
+      </span>
+    </>
+  ) : (
+    <span className="text-xl text-red-500">No Discount on this product</span>
+  )}
+</div>
+
           {/* Order on WhatsApp Section */}
           <div className="mt-2 mb-2 flex justify-center md:justify-start">
             <button className="btn text-white hover:bg-green-700 flex items-center justify-center space-x-1 bg-green-600 text-lg">
@@ -130,12 +136,14 @@ export default function ShopNow() {
                 <FaPlus />
               </button>
             </div>
-            <button
-              onClick={() => handleAddToCart(product)}
-              className="bg-green-600 hover:bg-green-700 flex items-center text-white px-6 py-2 rounded-md"
-            >
-              <LiaShoppingBasketSolid className="text-xl mr-2" /> Add to Cart
-            </button>
+           
+<button
+    onClick={() => handleAddToCart2(product, quantity)} // Pass quantity here
+    className="bg-green-600 hover:bg-green-700 flex items-center text-white px-6 py-2 rounded-md"
+>
+    <LiaShoppingBasketSolid className="text-xl mr-2" /> Add to Cart
+</button>
+
             <button className="bg-orange-500 hover:bg-orange-700 flex items-center text-white px-6 py-2 rounded-md">
               <LiaOpencart className="text-xl mr-2" /> Shop Now
             </button>
