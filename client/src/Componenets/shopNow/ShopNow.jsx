@@ -17,7 +17,6 @@ import {
 } from "react-icons/fa";
 import { LiaOpencart } from "react-icons/lia";
 import Pages from "../../pages/shared/Pages/Pages";
-import useClickToCart from "../../hooks/useClickToCart";
 import useClickToHeart from "../../hooks/useClickToHeart";
 import RelatedProduct from "./relatedProduct";
 import useAuth from "../../hooks/useAuth";
@@ -30,7 +29,7 @@ export default function ShopNow() {
   const [activeTab, setActiveTab] = useState("description");
   const [handleAddToCart2] = useIncreseAndDesAddToCart();
   const [handleAddToHeart] = useClickToHeart();
-  const {user} = useAuth()
+  const { user } = useAuth();
   const {
     data: { product = {}, relatedProducts = [] } = {}, // Fetch both product and related products
     isError,
@@ -96,19 +95,21 @@ export default function ShopNow() {
 
           {/* Price Section */}
           <div className="flex items-center justify-center lg:justify-start space-x-4">
-  <span className="text-3xl font-bold text-green-600">
-    ${product.price}
-  </span>
-  {product.discount ? (
-    <>
-      <span className="text-2xl line-through text-black">
-        ${product.discount}
-      </span>
-    </>
-  ) : (
-    <span className="text-xl text-red-500">No Discount on this product</span>
-  )}
-</div>
+            <span className="text-3xl font-bold text-green-600">
+              ${product.price}
+            </span>
+            {product.discount ? (
+              <>
+                <span className="text-2xl line-through text-black">
+                  ${product.discount}
+                </span>
+              </>
+            ) : (
+              <span className="text-xl text-red-500">
+                No Discount on this product
+              </span>
+            )}
+          </div>
 
           {/* Order on WhatsApp Section */}
           <div className="mt-2 mb-2 flex justify-center md:justify-start">
@@ -136,13 +137,13 @@ export default function ShopNow() {
                 <FaPlus />
               </button>
             </div>
-           
-<button
-    onClick={() => handleAddToCart2(product, quantity)} // Pass quantity here
-    className="bg-green-600 hover:bg-green-700 flex items-center text-white px-6 py-2 rounded-md"
->
-    <LiaShoppingBasketSolid className="text-xl mr-2" /> Add to Cart
-</button>
+
+            <button
+              onClick={() => handleAddToCart2(product, quantity)} // Pass quantity here
+              className="bg-green-600 hover:bg-green-700 flex items-center text-white px-6 py-2 rounded-md"
+            >
+              <LiaShoppingBasketSolid className="text-xl mr-2" /> Add to Cart
+            </button>
 
             <button className="bg-orange-500 hover:bg-orange-700 flex items-center text-white px-6 py-2 rounded-md">
               <LiaOpencart className="text-xl mr-2" /> Shop Now
@@ -221,11 +222,11 @@ export default function ShopNow() {
           )}
         </div>
       )}
-      <RelatedProduct 
-  relatedProducts={relatedProducts} 
-  handleAddToHeart={handleAddToHeart} 
-  user={user} 
-/>
+      <RelatedProduct
+        relatedProducts={relatedProducts}
+        handleAddToHeart={handleAddToHeart}
+        user={user}
+      />
     </div>
   );
 }

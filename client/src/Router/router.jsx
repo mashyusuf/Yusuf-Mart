@@ -8,6 +8,7 @@ import PrivateRouter from "./PrivateRouter";
 import ShopNow from "../Componenets/shopNow/ShopNow";
 import MyAddToCart from "../Componenets/MyCart/MyAddToCart";
 import MyHeartList from "../Componenets/myHeartList/MyHeartList";
+import Checkout from "../Componenets/checkout/Checkout";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: "/myHeart",
         element: <MyHeartList />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
     ],
   },
