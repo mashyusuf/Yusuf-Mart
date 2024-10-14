@@ -1,102 +1,121 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { authContext } from '../../providers/AuthProviders';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import 'animate.css';
 import useAuth from '../../hooks/useAuth';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
+import SocialLogin from '../shared/socialLogin/SocialLogin';
+
 export default function Registration() {
   const [role, setRole] = useState('customer');
-  const {createUser} = useAuth();
-  const navigate = useNavigate()
-  const hangleRegistration = event => {
+  const { createUser } = useAuth();
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
+
+  const handleRegistration = (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-  
+
     console.log(name, email, password);
-  
+
     createUser(email, password)
-      .then(result => {
-        const loginUser = result.user;
-        console.log(loginUser);
-  
-        // Display SweetAlert2 notification
-        Swal.fire({
-          title: "Registration Successful!",
-          text: "Your account has been created successfully.",
-          icon: "success", // Done icon
-          showConfirmButton: false, // Remove the default "OK" button
-          timer: 1500, // Auto-close after 1.5 seconds
-          showClass: {
-            popup: `animate__animated animate__fadeInUp animate__faster`,
-          },
-          hideClass: {
-            popup: `animate__animated animate__fadeOutDown animate__faster`,
+      .then((result) => {
+        const userinfo = {
+          name: name, // Corrected
+          email: email, // Corrected
+          role: role, // Include role in user info
+        };
+
+        axiosPublic.post('/user', userinfo).then((res) => {
+          if (res.data.insertedId) {
+            // Display SweetAlert2 notification
+            Swal.fire({
+              title: 'Registration Successful!',
+              text: 'Your account has been created successfully.',
+              icon: 'success', // Done icon
+              showConfirmButton: false, // Remove the default "OK" button
+              timer: 1500, // Auto-close after 1.5 seconds
+              showClass: {
+                popup: `animate__animated animate__fadeInUp animate__faster`,
+              },
+              hideClass: {
+                popup: `animate__animated animate__fadeOutDown animate__faster`,
+              },
+            });
+
+            // Navigate to home after SweetAlert closes
+            setTimeout(() => {
+              navigate('/');
+            }, 1500); // Match the timer with SweetAlert
           }
         });
-  
-        // Navigate to home after SweetAlert closes
-        setTimeout(() => {
-          navigate('/');
-        }, 1500); // Match the timer with SweetAlert
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error during registration:', error);
       });
   };
-  
-  
-  
 
   return (
     <div className="flex justify-center items-center h-screen mt-10 mb-10 bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-4 bg-white rounded shadow-md">
         <h2 className="text-2xl font-bold text-center mb-6">
-          <Link to={'/login'}><span className="text-gray-400">Login</span></Link> <span className="text-black">Register</span>
+          <Link to={'/login'}>
+            <span className="text-gray-400">Login</span>
+          </Link>{' '}
+          <span className="text-black">Register</span>
         </h2>
         <p className="text-center text-sm text-gray-600 mb-4">
-          There are many advantages to creating an account: the payment process is faster, shipment tracking is possible and much more.
+          There are many advantages to creating an account: the payment process is faster, shipment tracking is possible, and much more.
         </p>
 
-        <form onSubmit={hangleRegistration} className="space-y-4">
+        <form onSubmit={handleRegistration} className="space-y-4">
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">Username *</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Username *
+            </label>
             <input
               type="text"
               required
-              name='name'
+              name="name"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
               placeholder="Username"
             />
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">Email address *</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Email address *
+            </label>
             <input
               type="email"
               required
-              name='email'
+              name="email"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
               placeholder="Email"
             />
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700">Password *</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700">
+              Password *
+            </label>
             <input
               type="password"
               required
-              name='password'
+              name="password"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
               placeholder="Password"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
-            <div className="flex  items-center space-x-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Role
+            </label>
+            <div className="flex items-center space-x-4">
               <label className="flex items-center space-x-2">
                 <input
                   type="radio"
@@ -133,6 +152,7 @@ export default function Registration() {
             Register
           </button>
         </form>
+        <SocialLogin />
       </div>
     </div>
   );

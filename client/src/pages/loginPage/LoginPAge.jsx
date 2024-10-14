@@ -4,6 +4,7 @@ import { authContext } from '../../providers/AuthProviders';
 import Swal from 'sweetalert2'
 import 'animate.css';
 import useAuth from '../../hooks/useAuth';
+import SocialLogin from '../shared/socialLogin/SocialLogin';
 export default function LoginPage() {
   const {signIn} = useAuth()
   const navigate = useNavigate()
@@ -104,6 +105,7 @@ export default function LoginPage() {
             Log In
           </button>
         </form>
+        <SocialLogin />
       </div>
     </div>
   );

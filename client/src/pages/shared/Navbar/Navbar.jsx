@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { GiTechnoHeart } from "react-icons/gi";
 import {
   FaHeart,
@@ -7,6 +7,8 @@ import {
   FaUserSecret,
   FaMapMarkerAlt,
 } from "react-icons/fa";
+import { RiDashboardLine } from "react-icons/ri";
+import { AiOutlineLogout } from "react-icons/ai";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import logo from "../../../assets/logo.png";
 import { IoSearchOutline } from "react-icons/io5";
@@ -27,7 +29,27 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [cartItem] = useAddToCart();
   const [heartItem] = useAddToHeart();
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null); // Reference to the dropdown
 
+  const toggleDropdown = () => {
+    setDropdownOpen((prev) => !prev);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownOpen(false); // Close dropdown if clicked outside
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener for clicks outside
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   // Handle scroll event to fix the navbar
   useEffect(() => {
     const handleScroll = () => {
@@ -99,29 +121,44 @@ export default function Navbar() {
 
         {/* User Icons */}
         <div className="flex items-center lg:w-1/4 md:w-1/4 w-1/2 justify-end space-x-10">
-          {user ? (
+        {user ? (
+        <div onClick={toggleDropdown} className="flex items-center space-x-1 cursor-pointer">
+          <div className="relative">
+            <FaUserSecret className="text-4xl text-gray-700 hover:scale-105 hover:text-orange-600 rounded-full  border-4 border-gray-300 p-1" />
+          </div>
+          {isDropdownOpen && (
             <div
-              onClick={handleLogout}
-              className="flex items-center space-x-1 cursor-pointer"
+              ref={dropdownRef} // Attach ref to the dropdown
+              className="absolute right-0 mt- w-48 bg-white shadow-lg rounded-md border border-gray-300 z-10"
+              style={{ marginTop: '120px' }} // Adjust margin to prevent overlap
             >
-              <FaUserSecret className="text-xl text-gray-700 hover:scale-105 hover:text-orange-600" />
-              <span className="text-sm text-gray-700 hover:text-orange-600 hover:font-extrabold">
-                Logout
-              </span>
+              <Link to="/dashboard" className="flex items-center justify-center block px-4 py-2 text-gray-700 hover:bg-gray-100">
+        <RiDashboardLine className="text-gray-700 hover:text-orange-600 transition duration-200" />
+        <span className="ml-2 hover:text-orange-600">Dashboard</span>
+      </Link>
+      <hr className="border-gray-200" />
+      <div
+        onClick={handleLogout}
+        className="flex items-center justify-center space-x-1 px-4 py-2 cursor-pointer hover:bg-gray-100"
+      >
+        <AiOutlineLogout className="text-sm text-gray-700 hover:text-orange-600 hover:scale-105 transition duration-200" />
+        <span className="text-sm text-gray-700 hover:text-orange-600 hover:font-extrabold transition duration-200">
+          Logout
+        </span>
+      </div>
             </div>
-          ) : (
-            <Link
-              to="/login"
-              className="flex items-center space-x-1 cursor-pointer"
-            >
-              <FaUserSecret className="text-xl text-gray-700 hover:scale-105 hover:text-orange-600" />
-              <span className="text-sm text-gray-700 hover:text-orange-600 hover:font-extrabold">
-                Sign In
-                <br />
-                Account
-              </span>
-            </Link>
           )}
+        </div>
+      ) : (
+        <Link to="/login" className="flex items-center space-x-1 cursor-pointer">
+          <FaUserSecret className="text-xl text-gray-700 hover:scale-105 hover:text-orange-600" />
+          <span className="text-sm text-gray-700 hover:text-orange-600 hover:font-extrabold">
+            Sign In
+            <br />
+            Account
+          </span>
+        </Link>
+      )}
 
           {/* Heart Icon */}
           <div className="relative">
