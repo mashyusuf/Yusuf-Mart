@@ -22,7 +22,9 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    const allCategoryCollection = client.db("Yusuf-Mart").collection("allData");
+    const allCategoryCollection = client
+      .db("Yusuf-Mart")
+      .collection("AllProducts");
     const thisWeakProductsCollection = client
       .db("Yusuf-Mart")
       .collection("thisWeak");
@@ -43,22 +45,21 @@ async function run() {
     const reviewsCollection = client.db("Yusuf-Mart").collection("reviews");
     const usersCollection = client.db("Yusuf-Mart").collection("users");
 
-
     // JWT RELATED API---------
-    app.post('/jwt',async(req,res)=>{
+    app.post("/jwt", async (req, res) => {
       const user = req.body;
-      const token = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{
-        expiresIn:'100d'
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "100d",
       });
-      res.send({token})
-    })
+      res.send({ token });
+    });
 
     //users related Api ---
-    app.get('/user', async(req,res)=>{
-      console.log(req.headers)
+    app.get("/user", async (req, res) => {
+      console.log(req.headers);
       const result = await usersCollection.find().toArray();
       res.send(result);
-    })
+    });
 
     // Fetch filtered products based on query parameters
     app.get("/allData", async (req, res) => {
@@ -139,12 +140,17 @@ async function run() {
       const result = await allCategoryCollection.find(query).toArray();
       res.send(result);
     });
+    // Fetch the "This Week Only" products from the database
+app.get("/thisWeakProducts", async (req, res) => {
+  try {
+    const result = await allCategoryCollection.find({ special: "Only for this week" }).toArray();
+    res.send(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
 
-    //fetch the this weak  Data From database
-    app.get("/thisWeakProducts", async (req, res) => {
-      const result = await thisWeakProductsCollection.find().toArray();
-      res.send(result);
-    });
     //fetch the this newArrivals Products Data From database
     app.get("/newArrivals", async (req, res) => {
       const result = await newArrivalsCollection.find().toArray();
@@ -157,9 +163,17 @@ async function run() {
     });
     //fetch the this SUPER offer  2Data From database
     app.get("/superProducts", async (req, res) => {
-      const result = await superOfferProductsCollection.find().toArray();
-      res.send(result);
-    });
+      try {
+          const result = await allCategoryCollection.find({ special: "Super Special Package" }).toArray();
+          res.send(result);
+      } catch (err) {
+          console.error(err);
+          res.status(500).send({ message: "Internal server error" });
+      }
+  });
+  
+    
+    
     //fetch the this best selles  2Data From database
     app.get("/bestSelles", async (req, res) => {
       const result = await bestSellesCollection.find().toArray();
@@ -255,23 +269,19 @@ async function run() {
       const existingUser = await usersCollection.findOne(query);
 
       if (existingUser) {
-        return res
-          .status(200)
-          .send({
-            exists: true,
-            message: "User already exists",
-            insertedId: null,
-          });
+        return res.status(200).send({
+          exists: true,
+          message: "User already exists",
+          insertedId: null,
+        });
       }
 
       const result = await usersCollection.insertOne(user);
-      res
-        .status(201)
-        .send({
-          exists: false,
-          message: "User registered successfully",
-          insertedId: result.insertedId,
-        });
+      res.status(201).send({
+        exists: false,
+        message: "User registered successfully",
+        insertedId: result.insertedId,
+      });
     });
   } finally {
     // Ensures that the client will close when you finish/error
