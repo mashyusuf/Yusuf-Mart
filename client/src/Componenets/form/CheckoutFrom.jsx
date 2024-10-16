@@ -6,6 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import { ImSpinner5 } from "react-icons/im";
 import useAddToCart from '../../hooks/useAddToCart';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 export default function CheckoutForm({ selectedPaymentMethod, cartItems, formData, product }) {
   const stripe = useStripe();
@@ -16,6 +17,7 @@ export default function CheckoutForm({ selectedPaymentMethod, cartItems, formDat
   const [cartItem, refetch] = useAddToCart(); // Refetch the cart after payment
   const [cardError, setCardError] = useState('');
   const [processing, setProcessing] = useState(false);
+  const navigate = useNavigate();
 
   // Calculate the total price
   const totalPrice = parseFloat(cartItems.reduce((sum, item) => sum + item.cart.price, 0)).toFixed(2);
@@ -119,7 +121,6 @@ export default function CheckoutForm({ selectedPaymentMethod, cartItems, formDat
                 icon: 'success',
                 confirmButtonText: 'Okay',
             }).then(() => {
-                navigate('/success'); // Redirect to success page or desired route
             });
         } catch (error) {
             console.error('Error processing payment or deleting cart:', error);
@@ -133,7 +134,9 @@ export default function CheckoutForm({ selectedPaymentMethod, cartItems, formDat
     }
 
     setProcessing(false);
-    refetch(); // Refetch cart items after deletion
+    navigate('/dashboard/payment-history');
+    refetch(); 
+    
 };
 
 

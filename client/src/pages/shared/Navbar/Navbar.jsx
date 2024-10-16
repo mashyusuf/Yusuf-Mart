@@ -10,7 +10,7 @@ import {
 import { RiDashboardLine } from "react-icons/ri";
 import { AiOutlineLogout } from "react-icons/ai";
 import { HiOutlineShoppingCart } from "react-icons/hi";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logoo.png";
 import { IoSearchOutline } from "react-icons/io5";
 import { FiHeart } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
@@ -44,10 +44,10 @@ export default function Navbar() {
 
   useEffect(() => {
     // Add event listener for clicks outside
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
       // Cleanup the event listener
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
   // Handle scroll event to fix the navbar
@@ -121,79 +121,98 @@ export default function Navbar() {
 
         {/* User Icons */}
         <div className="flex items-center lg:w-1/4 md:w-1/4 w-1/2 justify-end space-x-10">
-        {user ? (
-        <div onClick={toggleDropdown} className="flex items-center space-x-1 cursor-pointer">
-          <div className="relative">
-            <FaUserSecret className="text-4xl text-gray-700 hover:scale-105 hover:text-orange-600 rounded-full  border-4 border-gray-300 p-1" />
-          </div>
-          {isDropdownOpen && (
+          {user ? (
             <div
-              ref={dropdownRef} // Attach ref to the dropdown
-              className="absolute right-0 mt- w-48 bg-white shadow-lg rounded-md border border-gray-300 z-10"
-              style={{ marginTop: '120px' }} // Adjust margin to prevent overlap
+              onClick={toggleDropdown}
+              className="flex items-center space-x-1 cursor-pointer"
             >
-              <Link to="/dashboard" className="flex items-center justify-center block px-4 py-2 text-gray-700 hover:bg-gray-100">
-        <RiDashboardLine className="text-gray-700 hover:text-orange-600 transition duration-200" />
-        <span className="ml-2 hover:text-orange-600">Dashboard</span>
-      </Link>
-      <hr className="border-gray-200" />
-      <div
-        onClick={handleLogout}
-        className="flex items-center justify-center space-x-1 px-4 py-2 cursor-pointer hover:bg-gray-100"
-      >
-        <AiOutlineLogout className="text-sm text-gray-700 hover:text-orange-600 hover:scale-105 transition duration-200" />
-        <span className="text-sm text-gray-700 hover:text-orange-600 hover:font-extrabold transition duration-200">
-          Logout
-        </span>
-      </div>
+              <div className="relative">
+                <FaUserSecret className="text-4xl text-gray-700 hover:scale-105 hover:text-orange-600 rounded-full  border-4 border-gray-300 p-1" />
+              </div>
+              {isDropdownOpen && (
+                <div
+                  ref={dropdownRef} // Attach ref to the dropdown
+                  className="absolute right-0 mt- w-48 bg-white shadow-lg rounded-md border border-gray-300 z-10"
+                  style={{ marginTop: "120px" }} // Adjust margin to prevent overlap
+                >
+                  <Link
+                    to="/dashboard"
+                    className="flex items-center justify-center block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    <RiDashboardLine className="text-gray-700 hover:text-orange-600 transition duration-200" />
+                    <span className="ml-2 hover:text-orange-600">
+                      Dashboard
+                    </span>
+                  </Link>
+                  <hr className="border-gray-200" />
+                  <div
+                    onClick={handleLogout}
+                    className="flex items-center justify-center space-x-1 px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    <AiOutlineLogout className="text-sm text-gray-700 hover:text-orange-600 hover:scale-105 transition duration-200" />
+                    <span className="text-sm text-gray-700 hover:text-orange-600 hover:font-extrabold transition duration-200">
+                      Logout
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
+          ) : (
+            <Link
+              to="/login"
+              className="flex items-center space-x-1 cursor-pointer"
+            >
+              <FaUserSecret className="text-xl text-gray-700 hover:scale-105 hover:text-orange-600" />
+              <span className="text-sm text-gray-700 hover:text-orange-600 hover:font-extrabold">
+                Sign In
+                <br />
+                Account
+              </span>
+            </Link>
           )}
-        </div>
-      ) : (
-        <Link to="/login" className="flex items-center space-x-1 cursor-pointer">
-          <FaUserSecret className="text-xl text-gray-700 hover:scale-105 hover:text-orange-600" />
-          <span className="text-sm text-gray-700 hover:text-orange-600 hover:font-extrabold">
-            Sign In
-            <br />
-            Account
-          </span>
-        </Link>
-      )}
 
           {/* Heart Icon */}
           <div className="relative">
-            <Link to={'/myheart'}><button
-              className={`relative ${heartItem.length > 0 ? "icon-pulse" : ""}`}
-            >
-              <GiTechnoHeart
-                className={`text-2xl cursor-pointer ${
-                  heartItem.length > 0
-                    ? "text-red-500"
-                    : "text-gray-700 hover:text-red-500"
-                } transition-all duration-500`}
-              />
-              <div className="absolute -top-1 -right-2 bg-purple-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                {heartItem.length}
-              </div>
-            </button></Link>
+            <Link to={"/myheart"}>
+              <button
+                className={`relative ${
+                  heartItem.length > 0 ? "icon-pulse" : ""
+                }`}
+              >
+                <GiTechnoHeart
+                  className={`text-2xl cursor-pointer ${
+                    heartItem.length > 0
+                      ? "text-red-500"
+                      : "text-gray-700 hover:text-red-500"
+                  } transition-all duration-500`}
+                />
+                <div className="absolute -top-1 -right-2 bg-purple-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  {heartItem.length}
+                </div>
+              </button>
+            </Link>
           </div>
 
           {/* Cart Icon */}
           <div className="relative">
-            <Link to={'/myCart'}><button
-              className={`relative ${cartItem.length > 0 ? "icon-pulse" : ""}`}
-            >
-              <HiOutlineShoppingCart
-                className={`text-2xl cursor-pointer ${
-                  cartItem.length > 0
-                    ? "text-green-700 hover:text-cyan-600"
-                    : "text-gray-700 hover:text-green-500"
-                } transition-all duration-500`}
-              />
-              <div className="absolute -top-1 -right-2 bg-purple-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                {cartItem.length}
-              </div>
-            </button></Link>
+            <Link to={"/myCart"}>
+              <button
+                className={`relative ${
+                  cartItem.length > 0 ? "icon-pulse" : ""
+                }`}
+              >
+                <HiOutlineShoppingCart
+                  className={`text-2xl cursor-pointer ${
+                    cartItem.length > 0
+                      ? "text-green-700 hover:text-cyan-600"
+                      : "text-gray-700 hover:text-green-500"
+                  } transition-all duration-500`}
+                />
+                <div className="absolute -top-1 -right-2 bg-purple-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                  {cartItem.length}
+                </div>
+              </button>
+            </Link>
           </div>
           {/* Mobile Menu */}
 

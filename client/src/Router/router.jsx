@@ -9,6 +9,9 @@ import ShopNow from "../Componenets/shopNow/ShopNow";
 import MyAddToCart from "../Componenets/MyCart/MyAddToCart";
 import MyHeartList from "../Componenets/myHeartList/MyHeartList";
 import Checkout from "../Componenets/checkout/Checkout";
+import DashBoard from "../layout/Dashboard/DashBoard";
+import PaymentHistory from "../Componenets/DashBoard Era/paymentHistory/PaymentHistory";
+import UserHome from "../Componenets/DashBoard Era/userHome/UserHome";
 
 export const router = createBrowserRouter([
   {
@@ -49,4 +52,18 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: 'dashboard',
+    element: <PrivateRouter><DashBoard /></PrivateRouter>,  
+    children: [
+      {
+        index: true,
+        element: <PrivateRouter><UserHome /></PrivateRouter>
+    },
+      {
+        path: 'payment-history',
+        element: <PrivateRouter><PaymentHistory /></PrivateRouter>, 
+      }
+    ]
+  }
 ]);

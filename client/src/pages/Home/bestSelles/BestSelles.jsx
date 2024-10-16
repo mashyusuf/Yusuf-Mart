@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 export default function BestSelles() {
   const axiosPublic = useAxiosPublic();
-  const [handleAddToHeart]=useClickToHeart();
+  const [handleAddToHeart] = useClickToHeart();
   const [handleAddToCart] = useClickToCart();
 
   const { data: bestSelles = [], isError, isLoading } = useQuery({
@@ -24,8 +24,6 @@ export default function BestSelles() {
       }
     },
   });
-
- 
 
   if (isLoading) {
     return <Loading />;
@@ -50,7 +48,7 @@ export default function BestSelles() {
               <h1 className="text-white text-center bg-red-600 px-2 py-2 rounded-full">
                 {product.discount_percentage}%
               </h1>
-              <button onClick={()=> handleAddToHeart(product)} className="flex items-center text-black hover:text-red-500">
+              <button onClick={() => handleAddToHeart(product)} className="flex items-center text-black hover:text-red-500">
                 <AiOutlineHeart className="mr-2 text-2xl" />
               </button>
             </div>
@@ -97,7 +95,7 @@ export default function BestSelles() {
           </p>
 
           {/* Rating */}
-          <div className="flex items-center">
+          <div className="flex gap-4 items-center">
             <span className="text-yellow-500">★ {product.rating}</span>
           </div>
 
@@ -113,15 +111,30 @@ export default function BestSelles() {
             </div>
           </div>
 
+          {/* Availability Status */}
+          <p className={`text-lg font-semibold ${product.available === 'In Stock' ? 'text-green-500' : 'text-red-500'}`}>
+            {product.available}
+          </p>
+
           {/* Conditional Button */}
           <div className="mt-auto">
-            {product.category === 'This Week Only' ? (
-              <Link to={`/shopNow/${product.name}`}><button className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full mb-4 hover:bg-purple-700 hover:text-white">
-              <AiOutlineShoppingCart className="mr-2" /> Shop Now
-            </button></Link>
+            {product.available === 'In Stock' ? (
+              <>
+                {product.category === 'This Week Only' ? (
+                  <Link to={`/shopNow/${product.name}`}>
+                    <button className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full mb-4 hover:bg-purple-700 hover:text-white">
+                      <AiOutlineShoppingCart className="mr-2" /> Shop Now
+                    </button>
+                  </Link>
+                ) : (
+                  <button onClick={() => handleAddToCart(product)} className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full hover:bg-purple-700 hover:text-white">
+                    <AiOutlineShoppingCart className="mr-2" /> Add to Cart
+                  </button>
+                )}
+              </>
             ) : (
-              <button onClick={()=> handleAddToCart(product)} className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full hover:bg-purple-700 hover:text-white">
-                <AiOutlineShoppingCart className="mr-2" /> Add to Cart
+              <button disabled className="border-gray-400 border text-gray-400 py-2 px-4 rounded flex items-center justify-center w-full cursor-not-allowed">
+                <AiOutlineShoppingCart className="mr-2" /> Not In Stock
               </button>
             )}
           </div>

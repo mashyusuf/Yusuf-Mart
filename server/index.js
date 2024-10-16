@@ -3,13 +3,18 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const stripe = require("stripe")(process.env.STRIPE_SEC_KEY);
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 // CORS options
 const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://yusufmart-6fb88.web.app",
+    "https://yusufmart-6fb88.firebaseapp.com",
+  ],
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -20,18 +25,18 @@ app.use(express.json());
 const verifyToken = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
-    return res.status(401).send({ message: 'unauthorized access' });
+    return res.status(401).send({ message: "unauthorized access" });
   }
 
-  const token = authHeader.split(' ')[1]; // Extract token from 'Bearer <token>'
+  const token = authHeader.split(" ")[1]; // Extract token from 'Bearer <token>'
   if (!token) {
-    return res.status(401).send({ message: 'unauthorized access' });
+    return res.status(401).send({ message: "unauthorized access" });
   }
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) {
       console.log(err);
-      return res.status(401).send({ message: 'unauthorized access' });
+      return res.status(401).send({ message: "unauthorized access" });
     }
     req.user = decoded;
     next();
@@ -337,40 +342,45 @@ async function run() {
     // Payment-related API
 
     // Payment API - POST (Save Payment Info)
-app.post("/payment", async (req, res) => {
-  const paymentInfo = req.body;
+    app.post("/payment", async (req, res) => {
+      const paymentInfo = req.body;
 
-  try {
-    // Save the payment information
-    const result = await payemntCollection.insertOne(paymentInfo);
-    res.send({ paymentResult: result });
-  } catch (error) {
-    console.error('Error saving payment:', error);
-    res.status(500).send({ message: 'Failed to save payment information' });
-  }
-});
+      try {
+        // Save the payment information
+        const result = await payemntCollection.insertOne(paymentInfo);
+        res.send({ paymentResult: result });
+      } catch (error) {
+        console.error("Error saving payment:", error);
+        res.status(500).send({ message: "Failed to save payment information" });
+      }
+    });
 
-  
     // Cart API - DELETE (Delete Cart Items)
-app.delete("/cart", async (req, res) => {
-  const { email } = req.body; // Get the email from the request body
+    app.delete("/cart", async (req, res) => {
+      const { email } = req.body; // Get the email from the request body
 
-  try {
-      // Delete the cart items based on the user's email
-      const deleteResult = await addToCartCollection.deleteMany({ email: email });
-      res.send({ deleteResult });
-  } catch (error) {
-      console.error('Error deleting cart items:', error);
-      res.status(500).send({ message: 'Failed to delete cart items' });
-  }
-});
+      try {
+        // Delete the cart items based on the user's email
+        const deleteResult = await addToCartCollection.deleteMany({
+          email: email,
+        });
+        res.send({ deleteResult });
+      } catch (error) {
+        console.error("Error deleting cart items:", error);
+        res.status(500).send({ message: "Failed to delete cart items" });
+      }
+    });
 
 
+    //-------Dashboard Eraaaaaaaaaa-------
 
 
-    
-    
-    
+    //user Payment History -----------
+    app.get('/payment-history', async (req, res) => {
+      const userEmail = req.query.email; // Assuming email is passed in the query
+      const result = await payemntCollection.find({ email: userEmail }).toArray();
+      res.send(result);
+    });
     
   } finally {
     // Ensures that the client will close when you finish/error
