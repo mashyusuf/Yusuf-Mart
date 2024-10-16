@@ -4,14 +4,43 @@ const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 const jwt = require('jsonwebtoken');
-//middleware
-app.use(cors());
+const stripe = require("stripe")(process.env.STRIPE_SEC_KEY);
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+
+// CORS options
+const corsOptions = {
+  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+// Verify Token Middleware
+const verifyToken = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).send({ message: 'unauthorized access' });
+  }
+
+  const token = authHeader.split(' ')[1]; // Extract token from 'Bearer <token>'
+  if (!token) {
+    return res.status(401).send({ message: 'unauthorized access' });
+  }
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      console.log(err);
+      return res.status(401).send({ message: 'unauthorized access' });
+    }
+    req.user = decoded;
+    next();
+  });
+};
+
+// MongoDB connection
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ziugtg4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -44,6 +73,7 @@ async function run() {
     const addToHeartCollection = client.db("Yusuf-Mart").collection("heart");
     const reviewsCollection = client.db("Yusuf-Mart").collection("reviews");
     const usersCollection = client.db("Yusuf-Mart").collection("users");
+    const payemntCollection = client.db("Yusuf-Mart").collection("payment");
 
     // JWT RELATED API---------
     app.post("/jwt", async (req, res) => {
@@ -141,15 +171,17 @@ async function run() {
       res.send(result);
     });
     // Fetch the "This Week Only" products from the database
-app.get("/thisWeakProducts", async (req, res) => {
-  try {
-    const result = await allCategoryCollection.find({ special: "Only for this week" }).toArray();
-    res.send(result);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send({ message: "Internal server error" });
-  }
-});
+    app.get("/thisWeakProducts", async (req, res) => {
+      try {
+        const result = await allCategoryCollection
+          .find({ special: "Only for this week" })
+          .toArray();
+        res.send(result);
+      } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "Internal server error" });
+      }
+    });
 
     //fetch the this newArrivals Products Data From database
     app.get("/newArrivals", async (req, res) => {
@@ -164,16 +196,16 @@ app.get("/thisWeakProducts", async (req, res) => {
     //fetch the this SUPER offer  2Data From database
     app.get("/superProducts", async (req, res) => {
       try {
-          const result = await allCategoryCollection.find({ special: "Super Special Package" }).toArray();
-          res.send(result);
+        const result = await allCategoryCollection
+          .find({ special: "Super Special Package" })
+          .toArray();
+        res.send(result);
       } catch (err) {
-          console.error(err);
-          res.status(500).send({ message: "Internal server error" });
+        console.error(err);
+        res.status(500).send({ message: "Internal server error" });
       }
-  });
-  
-    
-    
+    });
+
     //fetch the this best selles  2Data From database
     app.get("/bestSelles", async (req, res) => {
       const result = await bestSellesCollection.find().toArray();
@@ -283,6 +315,63 @@ app.get("/thisWeakProducts", async (req, res) => {
         insertedId: result.insertedId,
       });
     });
+
+    // create-payment-intent // Stripe Payment method---
+    app.post("/create-payment-intent", verifyToken, async (req, res) => {
+      const price = req.body.price;
+      const priceInCent = parseFloat(price) * 100;
+      if (!price || priceInCent < 1) return;
+      // generate clientSecret
+      const { client_secret } = await stripe.paymentIntents.create({
+        amount: priceInCent,
+        currency: "usd",
+        // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
+      // send client secret as response
+      res.send({ clientSecret: client_secret });
+    });
+
+    // Payment-related API
+
+    // Payment API - POST (Save Payment Info)
+app.post("/payment", async (req, res) => {
+  const paymentInfo = req.body;
+
+  try {
+    // Save the payment information
+    const result = await payemntCollection.insertOne(paymentInfo);
+    res.send({ paymentResult: result });
+  } catch (error) {
+    console.error('Error saving payment:', error);
+    res.status(500).send({ message: 'Failed to save payment information' });
+  }
+});
+
+  
+    // Cart API - DELETE (Delete Cart Items)
+app.delete("/cart", async (req, res) => {
+  const { email } = req.body; // Get the email from the request body
+
+  try {
+      // Delete the cart items based on the user's email
+      const deleteResult = await addToCartCollection.deleteMany({ email: email });
+      res.send({ deleteResult });
+  } catch (error) {
+      console.error('Error deleting cart items:', error);
+      res.status(500).send({ message: 'Failed to delete cart items' });
+  }
+});
+
+
+
+
+    
+    
+    
+    
   } finally {
     // Ensures that the client will close when you finish/error
     //await client.close();

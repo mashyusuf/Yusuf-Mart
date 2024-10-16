@@ -6,6 +6,7 @@ import Loading from '../../../hooks/Loading';
 import Error from '../../../hooks/Error';
 import useClickToCart from '../../../hooks/useClickToCart';
 import useClickToHeart from '../../../hooks/useClickToHeart';
+import { Link } from 'react-router-dom';
 
 export default function BestSelles() {
   const axiosPublic = useAxiosPublic();
@@ -115,9 +116,9 @@ export default function BestSelles() {
           {/* Conditional Button */}
           <div className="mt-auto">
             {product.category === 'This Week Only' ? (
-              <button className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full mb-4 hover:bg-purple-700 hover:text-white">
-                <AiOutlineShoppingCart className="mr-2" /> Shop Now
-              </button>
+              <Link to={`/shopNow/${product.name}`}><button className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full mb-4 hover:bg-purple-700 hover:text-white">
+              <AiOutlineShoppingCart className="mr-2" /> Shop Now
+            </button></Link>
             ) : (
               <button onClick={()=> handleAddToCart(product)} className="border-purple-600 border text-purple-600 py-2 px-4 rounded flex items-center justify-center w-full hover:bg-purple-700 hover:text-white">
                 <AiOutlineShoppingCart className="mr-2" /> Add to Cart

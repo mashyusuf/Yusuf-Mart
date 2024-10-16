@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/shopNow/:id",
-        element: <ShopNow />,
+        element: <PrivateRouter ><ShopNow /></PrivateRouter>,
       },
       {
         path: "/myCart",
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: <Checkout />,
+        element: <PrivateRouter><Checkout /></PrivateRouter>,
       },
     ],
   },

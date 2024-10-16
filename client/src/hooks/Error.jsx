@@ -1,6 +1,6 @@
 
 
-export default function Error() {
+export default function Error({ message }) {
   return (
     <div className="flex items-center justify-center h-screen bg-red-100">
       <div className="text-center">

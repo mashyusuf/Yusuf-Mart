@@ -145,9 +145,15 @@ export default function ShopNow() {
               <LiaShoppingBasketSolid className="text-xl mr-2" /> Add to Cart
             </button>
 
-            <button className="bg-orange-500 hover:bg-orange-700 flex items-center text-white px-6 py-2 rounded-md">
-              <LiaOpencart className="text-xl mr-2" /> Shop Now
-            </button>
+            {/* Link to Checkout with Product Details */}
+            <Link
+              to={`/checkout`}
+              state={{ product, quantity }} // Pass product and quantity
+            >
+              <button className="bg-orange-500 hover:bg-orange-700 flex items-center text-white px-6 py-2 rounded-md">
+                <LiaOpencart className="text-xl mr-2" /> Shop Now
+              </button>
+            </Link>
           </div>
           {/* Wishlist, Share, Compare */}
           <div className="flex justify-center lg:justify-start space-x-6 mt-6 text-gray-500">

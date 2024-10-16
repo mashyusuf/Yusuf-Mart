@@ -61,13 +61,6 @@ export default function Pages() {
         >
           <FaPhoneAlt className="mr-2" /> Contact
         </Link>
-        <Link 
-          to="/trending" 
-          className={`flex items-center ${linkClasses('trending')}`} 
-          onClick={() => handleClick('trending')}
-        >
-          <FaHotjar className="mr-2" /> Contact
-        </Link>
       </div>
     </div>
   );

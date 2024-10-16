@@ -1,37 +1,116 @@
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { FaChevronRight, FaSpinner } from "react-icons/fa"; 
 import useAddToCart from '../../hooks/useAddToCart';
-import { Link } from 'react-router-dom';
-import { FaChevronRight } from "react-icons/fa";
-export default function Checkout() {
-  const [cartItems] = useAddToCart();
-  const [showAll, setShowAll] = useState(false); // State to toggle between showing all or few items
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(''); // State to manage payment selection
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from '../form/CheckoutFrom';
+import Swal from 'sweetalert2';
+import useAuth from '../../hooks/useAuth';
+import CheckOutOrders from './CheckOutOrders';
 
-  // Function to handle payment method change
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUB_KEY);
+
+export default function Checkout() {
+  const location = useLocation(); 
+  const { product, quantity } = location.state || {}; 
+  const [cartItems] = useAddToCart(); 
+  const [showAll, setShowAll] = useState(false); 
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const [showStripeForm, setShowStripeForm] = useState(false);
+  const [showPaymentMethod, setShowPaymentMethod] = useState(false); 
+  const [loading, setLoading] = useState(false); 
+  const [formData, setFormData] = useState(null); 
+  const [email, setEmail] = useState(''); // Added email state
+  const { user } = useAuth();
+
+  // Handle payment method change
   const handlePaymentMethodChange = (event) => {
-    setSelectedPaymentMethod(event.target.value);
+    const method = event.target.value;
+    setSelectedPaymentMethod(method);
+
+    if (method === 'Cash on Delivery') {
+      setShowStripeForm(false);
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are choosing Cash on Delivery.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, proceed',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('Confirmed!', 'Your order will be processed with Cash on Delivery.', 'success');
+        } else {
+          setSelectedPaymentMethod('');
+        }
+      });
+    } else if (method === 'Check Payments') {
+      setShowStripeForm(true);
+    }
+  };
+
+  // Handle details form submission
+  const handleDetailsInfo = event => {
+    event.preventDefault();
+    setLoading(true); // Set loading state to true when submitting
+
+    const form = event.target;
+    const newFormData = {
+      firstname: form.firstname.value,
+      lastname: form.lastname.value,
+      companyname: form.companyname.value,
+      country: form.country.value,
+      streetaddress: form.streetaddress.value,
+      city: form.city.value,
+      state: form.state.value,
+      zip: form.zip.value,
+      phone: form.phone.value,
+      email: email, // Use the state variable here
+      terms: form.terms.checked
+    };
+    
+    console.log(newFormData);
+    setFormData(newFormData); // Update formData state
+
+    // Simulate loading and show Payment Method after form submission
+    setTimeout(() => {
+      setLoading(false); // Set loading back to false
+      setShowPaymentMethod(true); // Show payment methods after submitting details
+    }, 1500); // Simulating loading for 1.5 seconds
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value); // Update email state on input change
   };
 
   return (
     <div className="container mx-auto py-10">
-        <div className='flex space-x-2 '>
-            <Link to={'/'}><h1 className='flex items-center text-lg text-gray-300'>Home <FaChevronRight /></h1></Link>
-            <p className='text-lg text-black'>Checkout</p>
-        </div>
+      <div className="flex space-x-2 ">
+        <Link to={"/"}>
+          <h1 className="flex items-center text-lg text-gray-300">
+            Home <FaChevronRight />
+          </h1>
+        </Link>
+        <p className="text-lg text-black">Checkout</p>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left side: Billing details */}
         <div className="lg:col-span-2 bg-white p-6 rounded shadow-md">
           <h2 className="text-2xl font-bold mb-6">Billing Details</h2>
-          <form className="space-y-4">
+          <form onSubmit={handleDetailsInfo} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <input
                 type="text"
+                name="firstname"
                 placeholder="First name"
                 className="border border-purple-600 p-3 w-full rounded"
                 required
               />
               <input
                 type="text"
+                name="lastname"
                 placeholder="Last name"
                 className="border border-purple-600 p-3 w-full rounded"
                 required
@@ -39,63 +118,90 @@ export default function Checkout() {
             </div>
             <input
               type="text"
+              name="companyname"
               placeholder="Company name (optional)"
               className="border border-purple-600 p-3 w-full rounded"
             />
             <input
               type="text"
+              name="country"
               placeholder="Country / Region"
               className="border border-purple-600 p-3 w-full rounded"
               required
             />
             <input
               type="text"
+              name="streetaddress"
               placeholder="Street address"
               className="border border-purple-600 p-3 w-full rounded"
               required
             />
             <input
               type="text"
+              name="city"
               placeholder="Town / City"
               className="border border-purple-600 p-3 w-full rounded"
               required
             />
             <input
               type="text"
+              name="state"
               placeholder="State / County"
               className="border border-purple-600 p-3 w-full rounded"
               required
             />
             <input
               type="text"
+              name="zip"
               placeholder="ZIP / Postal code"
               className="border border-purple-600 p-3 w-full rounded"
               required
             />
             <input
               type="tel"
+              name="phone"
               placeholder="Phone"
               className="border border-purple-600 p-3 w-full rounded"
               required
             />
             <input
+              value={user?.email} // Controlled input
+              onChange={handleEmailChange} // Add onChange handler
               type="email"
+              name="email"
               placeholder="Email address"
               className="border border-purple-600 p-3 w-full rounded"
               required
             />
-
             <div className="flex items-center mt-4">
               <input
+                name="terms"
                 type="checkbox"
                 id="terms"
                 className="mr-2"
                 required
               />
               <label htmlFor="terms">
-                I have read and agree to the website <a href="#" className="text-purple-600">terms and conditions</a> *
+                I have read and agree to the website{" "}
+                <a href="#" className="text-purple-600">
+                  terms and conditions
+                </a>{" "}
+                *
               </label>
             </div>
+
+            {/* Submit Details button */}
+            <button
+              type="submit"
+              className="w-full flex justify-center items-center bg-white border border-purple-600 text-purple-600 p-3 rounded hover:bg-purple-600 hover:text-white transition-all duration-200 font-bold"
+              disabled={loading} // Disable button when loading
+            >
+              {loading ? (
+                <FaSpinner className="animate-spin mr-2" />
+              ) : (
+                "Submit Details"
+              )}
+            </button>
           </form>
         </div>
 
@@ -104,84 +210,56 @@ export default function Checkout() {
           <h2 className="text-2xl font-bold mb-6">
             Your order: <span className="ml-1">{cartItems.length}</span>
           </h2>
-          <div className="space-y-4">
-            <div className="flex justify-between">
-              <span>Product</span>
-              <span>Subtotal</span>
-            </div>
+          {/* orders */}
+          <CheckOutOrders
+            setShowAll={setShowAll}
+            showAll={showAll}
+            product={product}
+            cartItems={cartItems}
+          />
 
-            {cartItems.slice(0, showAll ? cartItems.length : 3).map((product) => (
-              <div key={product.id} className="border-t pt-4">
-                <div className="flex justify-between">
-                  <span>{product.cart.name}</span>
-                  <span>{product.cart.price}</span>
-                </div>
+          {/* Conditionally render Payment Methods */}
+          {showPaymentMethod && (
+            <div className="mt-6">
+              <h3 className="text-xl font-bold mb-4">Payment Method</h3>
+              <div className="flex items-center mb-4">
+                <input
+                  type="radio"
+                  id="checkPayment"
+                  name="payment"
+                  value="Check Payments"
+                  checked={selectedPaymentMethod === "Check Payments"}
+                  onChange={handlePaymentMethodChange}
+                  className="mr-2"
+                />
+                <label htmlFor="checkPayment">Check Payments</label>
               </div>
-            ))}
-
-            {/* Show More Button */}
-            {!showAll && cartItems.length > 3 && (
-              <button
-                className="w-full bg-gray-300 py-2 rounded hover:bg-gray-400 transition duration-300 mt-4"
-                onClick={() => setShowAll(true)}
-              >
-                Show More
-              </button>
-            )}
-
-            {/* Subtotal and Total Price */}
-            <div className="border-t pt-4">
-              <div className="flex justify-between">
-                <span>Total Price : </span>
-                <span>${cartItems.reduce((sum, product) => sum + product.cart.price, 0).toFixed(2)}</span>
+              <div className="flex items-center mb-4">
+                <input
+                  type="radio"
+                  id="cod"
+                  name="payment"
+                  value="Cash on Delivery"
+                  checked={selectedPaymentMethod === "Cash on Delivery"}
+                  onChange={handlePaymentMethodChange}
+                  className="mr-2"
+                />
+                <label htmlFor="cod">Cash on Delivery</label>
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Payment Methods */}
-          <div className="mt-6">
-            <h3 className="text-xl font-bold mb-4">Payment Method</h3>
-            <div className="flex items-center mb-4">
-              <input
-                type="radio"
-                id="checkPayment"
-                name="payment"
-                value="Check Payments"
-                checked={selectedPaymentMethod === 'Check Payments'}
-                onChange={handlePaymentMethodChange}
-                className="mr-2"
+          {/* Conditionally render Stripe checkout form */}
+          {showStripeForm && (
+            <Elements stripe={stripePromise}>
+              <CheckoutForm
+                formData={formData}
+                selectedPaymentMethod={selectedPaymentMethod}
+                cartItems={cartItems}
+                product={product}
               />
-              <label htmlFor="checkPayment">Check Payments</label>
-            </div>
-            <div className="flex items-center mb-4">
-              <input
-                type="radio"
-                id="cod"
-                name="payment"
-                value="Cash on Delivery"
-                checked={selectedPaymentMethod === 'Cash on Delivery'}
-                onChange={handlePaymentMethodChange}
-                className="mr-2"
-              />
-              <label htmlFor="cod">Cash on Delivery</label>
-            </div>
-          </div>
-
-          {/* Place Order Button */}
-          <div className="mt-6">
-            <button
-              disabled={!selectedPaymentMethod}
-              className={`w-full py-3 rounded text-white transition duration-300 ${
-                selectedPaymentMethod ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-400 cursor-not-allowed'
-              }`}
-            >
-              Place order
-            </button>
-          </div>
-
-          <p className="mt-6 text-sm text-gray-600">
-            Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our privacy policy.
-          </p>
+            </Elements>
+          )}
         </div>
       </div>
     </div>

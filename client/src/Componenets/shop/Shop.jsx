@@ -8,7 +8,7 @@ import { BsShop } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Importing icons for pagination
 import { GoArrowLeft } from "react-icons/go";
 import { Link, useSearchParams } from "react-router-dom";
-import Pages from "../../pages/shared/Pages/Pages";
+
 export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [minPrice, setMinPrice] = useState(0); 
@@ -77,7 +77,7 @@ export default function Shop() {
           </p>
           </div>
          <div>
-         <Link to={'/'}> <button className="flex items-center border border-purple-600 text-purple-600 px-3 py-1 mx-1 rounded-lg transition-all"> <GoArrowLeft />Home </button></Link>
+         <Link to={'/'}> <button className="flex items-center border border-purple-600 text-purple-600 hover:scale-105 hover:bg-purple-700 hover:text-white px-3 py-1 mx-1 rounded-lg transition-all"> <GoArrowLeft />Home </button></Link>
          
          </div>
         </div>
