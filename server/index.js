@@ -79,6 +79,7 @@ async function run() {
     const reviewsCollection = client.db("Yusuf-Mart").collection("reviews");
     const usersCollection = client.db("Yusuf-Mart").collection("users");
     const payemntCollection = client.db("Yusuf-Mart").collection("payment");
+    const blogsCollection = client.db("Yusuf-Mart").collection("blog");
 
     // JWT RELATED API---------
     app.post("/jwt", async (req, res) => {
@@ -371,17 +372,43 @@ async function run() {
       }
     });
 
+    // Fruits & Vegetables Data ----
+    app.get("/FruitsAndVegetables", async (req, res) => {
+      try {
+        // Fetch only documents where category is "Fruits and Vegetables"
+        const result = await allCategoryCollection
+          .find({ category: "Fruits and Vegetables" })
+          .toArray();
+        res.send(result);
+      } catch (error) {
+        console.error("Error fetching Fruits and Vegetables data:", error);
+        res.status(500).send("Server error");
+      }
+    });
 
+    //----Blog-------
+    app.get("/blog", async (req, res) => {
+      const page = parseInt(req.query.page) || 1;
+      const limit = 5; // Number of blogs per page
+      const skip = (page - 1) * limit;
+
+      try {
+        const blogs = await blogsCollection.find().skip(skip).limit(limit).toArray();
+        res.send(blogs);
+      } catch (error) {
+        res.status(500).send({ message: "Failed to fetch blogs." });
+      }
+    });
     //-------Dashboard Eraaaaaaaaaa-------
 
-
     //user Payment History -----------
-    app.get('/payment-history', async (req, res) => {
+    app.get("/payment-history", async (req, res) => {
       const userEmail = req.query.email; // Assuming email is passed in the query
-      const result = await payemntCollection.find({ email: userEmail }).toArray();
+      const result = await payemntCollection
+        .find({ email: userEmail })
+        .toArray();
       res.send(result);
     });
-    
   } finally {
     // Ensures that the client will close when you finish/error
     //await client.close();

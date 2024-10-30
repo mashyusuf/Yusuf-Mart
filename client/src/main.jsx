@@ -6,11 +6,12 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './Router/router';
 import AuthProviders from './providers/AuthProviders';
 import { ActiveLinkProvider } from './activeLink/ActiveLink';
-
+import { HelmetProvider } from 'react-helmet-async';
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <HelmetProvider>
      <ActiveLinkProvider>
      <AuthProviders>
     <QueryClientProvider client={queryClient}>
@@ -18,5 +19,6 @@ createRoot(document.getElementById('root')).render(
     </QueryClientProvider>
     </AuthProviders>
      </ActiveLinkProvider>
+     </HelmetProvider>
   </StrictMode>
 );

@@ -12,7 +12,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../hooks/Loading";
 import CategoryHome from "./categoryHome";
-
+import { Helmet } from 'react-helmet-async';
 export default function Home() {
   const axiosPublic = useAxiosPublic();
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -40,6 +40,9 @@ export default function Home() {
   };
   return (
     <div className="">
+      <Helmet>
+                <title>Yusuf Mart Home </title>
+            </Helmet>
       <CategorySection onSelectCategory={setSelectedCategory} />
       <DetailsCard></DetailsCard>
       <CategoryHome categoryProducts={categoryProducts} truncate={truncate}  />

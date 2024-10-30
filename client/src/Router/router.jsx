@@ -12,6 +12,8 @@ import Checkout from "../Componenets/checkout/Checkout";
 import DashBoard from "../layout/Dashboard/DashBoard";
 import PaymentHistory from "../Componenets/DashBoard Era/paymentHistory/PaymentHistory";
 import UserHome from "../Componenets/DashBoard Era/userHome/UserHome";
+import FruitsAndVegetables from "../pages/Fruits & Vegetables/FruitsAndVegetables";
+import Blog from "../pages/blog/Blog";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ export const router = createBrowserRouter([
       {
         path: "/shop",
         element: <Shop />,
+      },
+      {
+        path: "/Fruits & Vegetables",
+        element: <FruitsAndVegetables />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
       },
       {
         path: "/shopNow/:id",

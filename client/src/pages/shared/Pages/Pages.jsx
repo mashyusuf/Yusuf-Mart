@@ -34,18 +34,11 @@ export default function Pages() {
           <FaShoppingBag className="mr-2" /> Shop
         </Link>
         <Link 
-          to="/fruits-vegetables" 
+          to="/Fruits & Vegetables" 
           className={`flex items-center ${linkClasses('fruits-vegetables')}`} 
           onClick={() => handleClick('fruits-vegetables')}
         >
           <FaCarrot className="mr-2" /> Fruits & Vegetables
-        </Link>
-        <Link 
-          to="/beverages" 
-          className={`flex items-center ${linkClasses('beverages')}`} 
-          onClick={() => handleClick('beverages')}
-        >
-          <FaWineGlassAlt className="mr-2" /> Beverages
         </Link>
         <Link 
           to="/blog" 
