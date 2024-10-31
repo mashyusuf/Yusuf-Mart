@@ -14,11 +14,14 @@ import PaymentHistory from "../Componenets/DashBoard Era/paymentHistory/PaymentH
 import UserHome from "../Componenets/DashBoard Era/userHome/UserHome";
 import FruitsAndVegetables from "../pages/Fruits & Vegetables/FruitsAndVegetables";
 import Blog from "../pages/blog/Blog";
+import Contact from "../pages/contact/Contact";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -43,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "/shopNow/:id",

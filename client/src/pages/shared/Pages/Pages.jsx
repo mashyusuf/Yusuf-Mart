@@ -18,7 +18,7 @@ export default function Pages() {
   return (
     <div>
       {/* Navigation Links with Icons */}
-      <div className="hidden lg:flex justify-between pb-4">
+      <div className="hidden lg:flex justify-between pb-4 pt-3">
         <Link 
           to="/" 
           className={`flex items-center ${linkClasses('home')}`} 
@@ -39,6 +39,13 @@ export default function Pages() {
           onClick={() => handleClick('fruits-vegetables')}
         >
           <FaCarrot className="mr-2" /> Fruits & Vegetables
+        </Link>
+        <Link 
+          to="/Beverages" 
+          className={`flex items-center ${linkClasses('beverages')}`} 
+          onClick={() => handleClick('beverages')}
+        >
+          <FaNewspaper className="mr-2" /> Beverages
         </Link>
         <Link 
           to="/blog" 
