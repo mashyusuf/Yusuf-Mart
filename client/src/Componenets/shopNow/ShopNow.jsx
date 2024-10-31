@@ -22,6 +22,7 @@ import RelatedProduct from "./relatedProduct";
 import useAuth from "../../hooks/useAuth";
 import PaymentAndWarannty from "../staticTexts/PaymentAndWarannty";
 import useIncreseAndDesAddToCart from "../../hooks/useIncreseAndDesAddToCart";
+import { Helmet } from "react-helmet-async";
 export default function ShopNow() {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
@@ -51,6 +52,9 @@ export default function ShopNow() {
 
   return (
     <div className="container mx-auto p-6">
+      <Helmet>
+                <title>Shop Now {product.name}</title>
+            </Helmet>
       <Pages />
       {/* Main Section */}
       <div className="flex flex-col items-center lg:flex-row gap-8">

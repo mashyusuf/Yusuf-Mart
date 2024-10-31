@@ -8,6 +8,7 @@ import CheckoutForm from '../form/CheckoutFrom';
 import Swal from 'sweetalert2';
 import useAuth from '../../hooks/useAuth';
 import CheckOutOrders from './CheckOutOrders';
+import { Helmet } from 'react-helmet-async';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUB_KEY);
 
@@ -86,6 +87,9 @@ export default function Checkout() {
 
   return (
     <div className="container mx-auto py-10">
+      <Helmet>
+                <title>Check Out Here!</title>
+            </Helmet>
       <div className="flex space-x-2 ">
         <Link to={"/"}>
           <h1 className="flex items-center text-lg text-gray-300">

@@ -5,6 +5,7 @@ import 'animate.css';
 import useAuth from '../../hooks/useAuth';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import SocialLogin from '../shared/socialLogin/SocialLogin';
+import { Helmet } from 'react-helmet-async';
 
 export default function Registration() {
   const [role, setRole] = useState('customer');
@@ -60,6 +61,9 @@ export default function Registration() {
 
   return (
     <div className="flex justify-center items-center h-screen mt-10 mb-10 bg-gray-100">
+      <Helmet>
+                <title>Registration Page </title>
+            </Helmet>
       <div className="w-full max-w-md p-8 space-y-4 bg-white rounded shadow-md">
         <h2 className="text-2xl font-bold text-center mb-6">
           <Link to={'/login'}>

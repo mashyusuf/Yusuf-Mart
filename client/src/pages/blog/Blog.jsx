@@ -4,6 +4,7 @@ import useAxiosPublic from '../../hooks/useAxiosPublic';
 import Loading from '../../hooks/Loading';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
 import Modal from 'react-modal';
+import { Helmet } from 'react-helmet-async';
 
 Modal.setAppElement('#root'); // Accessibility setup for modal
 
@@ -43,6 +44,9 @@ export default function Blog() {
   return (
     <div className="container mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Left Side: Blog List */}
+      <Helmet>
+                <title>Blog</title>
+            </Helmet>
       <div className="col-span-2">
         <h1 className="text-3xl font-bold mb-6">Blog Posts</h1>
 

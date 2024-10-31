@@ -8,6 +8,7 @@ import { BsShop } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Importing icons for pagination
 import { GoArrowLeft } from "react-icons/go";
 import { Link, useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 export default function Shop() {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -69,6 +70,9 @@ export default function Shop() {
       />
      
       <div className="w-3/4 px-2">
+      <Helmet>
+                <title>Yusuf Mart Shop</title>
+      </Helmet>
         <div className="md:flex justify-between text-center md:ml-4 items-center gap-2">
           <div className="flex items-center gap-2">
           <h1 className="text-xl font-bold text-black mb-1">Shop All Products </h1>

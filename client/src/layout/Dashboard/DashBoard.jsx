@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaHome, FaMoneyCheckAlt, FaBars, FaTimes } from "react-icons/fa"; 
 import logo from "../../assets/logoo.png";
 import { Link, Outlet } from "react-router-dom"; // Import Outlet
+import { Helmet } from "react-helmet-async";
 
 export default function DashBoard() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -12,6 +13,9 @@ export default function DashBoard() {
 
   return (
     <div className="flex h-screen">
+      <Helmet>
+                <title>DashBoard</title>
+            </Helmet>
       {/* Sidebar / Drawer */}
       <div
         className={`fixed top-0 left-0 h-screen w-64 bg-purple-600 text-white transition-transform duration-300 transform ${

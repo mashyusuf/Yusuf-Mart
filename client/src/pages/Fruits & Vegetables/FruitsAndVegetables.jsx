@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import Pages from '../shared/Pages/Pages';
 import useClickToCart from '../../hooks/useClickToCart';
 import useClickToHeart from '../../hooks/useClickToHeart';
+import { Helmet } from 'react-helmet-async';
 
 export default function FruitsAndVegetables() {
   const axiosPublic = useAxiosPublic();
@@ -50,6 +51,9 @@ export default function FruitsAndVegetables() {
 
   return (
     <div>
+      <Helmet>
+                <title>Fruits & Vegetables </title>
+            </Helmet>
       <div className='mx-auto container flex flex-col sm:flex-row justify-between items-center mt-5 mb-10'>
         <div className="flex flex-col sm:flex-row items-center">
           <Link to={"/"}>

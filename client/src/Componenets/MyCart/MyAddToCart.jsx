@@ -7,6 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import { FaCheckCircle, FaTimesCircle, FaTrashAlt } from "react-icons/fa";
 import { PiRocketLaunchBold } from "react-icons/pi";
 import useHandleAddToCartDelete from "../../hooks/useHandleAddToCartDelete";
+import { Helmet } from "react-helmet-async";
 
 export default function MyAddToCart() {
   const [cartItems, isLoading, isError] = useAddToCart();
@@ -25,7 +26,9 @@ export default function MyAddToCart() {
   return (
     <div className="container mx-auto">
       <Pages />
-
+      <Helmet>
+                <title>My Cart </title>
+            </Helmet>
       {/* If user is not logged in */}
       {!user ? (
         <div className="h-screen flex flex-col justify-center items-center py-10">

@@ -14,6 +14,9 @@ export default function Contact() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Helmet>
+                <title>Contact Us</title>
+            </Helmet>
       <Toaster />
       <h2 className="text-center text-4xl font-bold mb-4">You can ask us questions</h2>
       <p className="text-center text-lg mb-8">

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useAuth from '../../../hooks/useAuth';
+import { Helmet } from 'react-helmet-async';
 
 export default function PaymentHistory() {
   const { user } = useAuth();
@@ -17,7 +18,9 @@ export default function PaymentHistory() {
   return (
     <div className="p-5">
       <h2 className="text-2xl font-bold mb-4">Total Payments: {payments.length}</h2>
-
+      <Helmet>
+                <title>Payment History </title>
+            </Helmet>
       {/* Responsive table with horizontal scrolling for small devices */}
       <div className="overflow-x-scroll sm:overflow-x-auto">
         <table className="min-w-full border-collapse">

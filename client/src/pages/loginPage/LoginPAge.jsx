@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import 'animate.css';
 import useAuth from '../../hooks/useAuth';
 import SocialLogin from '../shared/socialLogin/SocialLogin';
+import { Helmet } from 'react-helmet-async';
 export default function LoginPage() {
   const {signIn} = useAuth()
   const navigate = useNavigate()
@@ -56,6 +57,9 @@ export default function LoginPage() {
   
   return (
     <div className="flex justify-center  items-center h-screen bg-gray-100">
+      <Helmet>
+                <title>Login Page </title>
+            </Helmet>
       <div className="w-full max-w-md p-8 space-y-4 bg-white rounded shadow-md">
         <h2 className="text-2xl font-bold text-center mb-6">
           <span className="text-black">Login</span> <Link to={'/signUp'}><span className=" text-gray-400">Register</span></Link>

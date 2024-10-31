@@ -11,6 +11,7 @@ import { GiCavalry } from "react-icons/gi";
 import { MdOutlineDone } from "react-icons/md"; 
 import { PiRocketLaunchLight } from "react-icons/pi"
 import useHandleAddToHeartDelete from '../../hooks/useHandleAddToHeartDelete';
+import { Helmet } from 'react-helmet-async';
 export default function MyHeartList() {
 const [heartItem] = useAddToHeart();
 const [handleDelete] = useHandleAddToHeartDelete();
@@ -20,7 +21,9 @@ const { user } = useAuth();
   return (
     <div className="container mx-auto">
       <Pages />
-
+      <Helmet>
+                <title>My Heart </title>
+            </Helmet>
       {/* If user is not logged in */}
       {!user ? (
         <div className="h-screen flex flex-col justify-center items-center py-10">
